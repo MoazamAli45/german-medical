@@ -56,20 +56,17 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="bg-white rounded-lg shadow p-6">
               {/* Header */}
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                  <span className="text-red-600">❤️</span>
-                </div>
-                <div>
-                  <h1 className="text-xl font-semibold">ID: 345287</h1>
-                  <p className="text-gray-500">14y, 159cm</p>
-                </div>
+              <div className="flex items-center gap-4">
+                <span className="border-[1px] border-solid border-gray py-1 px-2">
+                  ID: 345287, Max Mustermann,
+                  <span className="text-[18px] ">♂</span>
+                </span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-2">
                 {inspections.map((inspection) => (
                   <div
                     key={inspection.number}
-                    className="bg-gray-50 rounded-lg p-4"
+                    className="group bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 h-[300px] hover:border-color hover:bg-[rgb(168,230,243,.19)]"
                   >
                     <div className="flex justify-between items-center mb-4">
                       <h2 className="font-semibold">
@@ -83,6 +80,13 @@ export default function Home() {
                       {inspection.age}, {inspection.height}
                     </div>
                     <D3InspectionGraph data={inspection.data} />
+
+                    {/* Show Details Button - appears on hover */}
+                    <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex justify-center">
+                      <button className="bg-blue-50 text-blue-600 px-6 py-2 rounded-lg font-medium hover:bg-blue-100 transition-colors">
+                        Show Details
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

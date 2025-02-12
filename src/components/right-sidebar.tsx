@@ -1,6 +1,6 @@
 export function RightSidebar() {
   return (
-    <div className="fixed right-0 top-0 h-full w-72 bg-white border-l p-4 overflow-y-auto">
+    <div className="fixed right-0 top-0 h-full w-72 bg-white  p-4 overflow-y-auto">
       {/* AP Mean Section */}
       <div className="mb-6">
         <h2 className="text-lg font-semibold mb-4">AP Mean</h2>
