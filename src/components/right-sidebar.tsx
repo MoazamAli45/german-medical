@@ -119,7 +119,7 @@ export function RightSidebar() {
                 className="flex justify-between gap-1 items-center bg-gray-50 rounded-xl p-3"
               >
                 <div className="flex items-center gap-3 shrink-0">
-                  <div className="flex flex-col items-center justify-center p-2 w-[90px] !rounded-xl  border-[1px] border-solid border-[#88B1EF]">
+                  <div className="flex flex-col items-center justify-center p-2 w-[90px] !rounded-xl  border-[1px] border-solid border-gray">
                     <span className="text-sm text-gray-600">
                       {reading.time}
                     </span>
@@ -130,7 +130,7 @@ export function RightSidebar() {
                   </div>
                 </div>
                 <div>{reading.icon}</div>
-                <div className="flex flex-col items-center shrink-0 p-2 !rounded-xl border-[1px] border-solid border-[#88B1EF]">
+                <div className="flex flex-col items-center shrink-0 p-2 !rounded-xl border-[1px] border-solid border-gray">
                   <span className="text-sm text-gray-600">Mean ADP</span>
                   <span className="text-lg font-semibold">{reading.adp}</span>
                   <span className="text-xs text-gray-500">mmHg</span>
