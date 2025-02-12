@@ -1,101 +1,113 @@
-import Image from "next/image";
+import { Sidebar } from "@/components/sidebar";
+import { RightSidebar } from "@/components/right-sidebar";
+import { D3InspectionGraph } from "@/components/d3-inspection-graph";
+
+// Sample data for the graphs
+const generateSampleData = () => {
+  const data = [];
+  for (let i = 0; i < 24; i++) {
+    data.push({
+      hour: i,
+      asp: Math.random() * 60 + 100, // Random ASP between 100 and 160
+      adp: Math.random() * 40 + 60, // Random ADP between 60 and 100
+      map: Math.random() * 50 + 70, // Random MAP between 70 and 120
+    });
+  }
+  return data;
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const inspections = [
+    {
+      number: 5,
+      date: "01.02.2011",
+      age: "14y",
+      height: "159cm",
+      data: generateSampleData(),
+    },
+    {
+      number: 4,
+      date: "11.12.2010",
+      age: "11y",
+      height: "129cm",
+      data: generateSampleData(),
+    },
+    {
+      number: 3,
+      date: "05.01.2010",
+      age: "11y",
+      height: "128cm",
+      data: generateSampleData(),
+    },
+    {
+      number: 1,
+      date: "19.11.2009",
+      age: "10.9y",
+      height: "158cm",
+      data: generateSampleData(),
+    },
+  ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Sidebar />
+      <main className="pl-16 pr-72 transition-all duration-300">
+        <div className="p-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="bg-white rounded-lg shadow p-6">
+              {/* Header */}
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                  <span className="text-red-600">❤️</span>
+                </div>
+                <div>
+                  <h1 className="text-xl font-semibold">ID: 345287</h1>
+                  <p className="text-gray-500">14y, 159cm</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {inspections.map((inspection) => (
+                  <div
+                    key={inspection.number}
+                    className="bg-gray-50 rounded-lg p-4"
+                  >
+                    <div className="flex justify-between items-center mb-4">
+                      <h2 className="font-semibold">
+                        Inspection {inspection.number}
+                      </h2>
+                      <span className="text-sm text-gray-500">
+                        {inspection.date}
+                      </span>
+                    </div>
+                    <div className="text-sm text-gray-500 mb-4">
+                      {inspection.age}, {inspection.height}
+                    </div>
+                    <D3InspectionGraph data={inspection.data} />
+                  </div>
+                ))}
+              </div>
+
+              {/* Legend */}
+              <div className="mt-6 flex gap-6 justify-center">
+                {[
+                  { color: "bg-red-500", label: "Abnormal ASP > Refenc ASP" },
+                  { color: "bg-blue-500", label: "Abnormal ADP > Refenc ADP" },
+                  {
+                    color: "bg-green-500",
+                    label: "Refence ASP/ADP > Abnormal ASP/ADP",
+                  },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full ${item.color}`} />
+                    <span className="text-sm text-gray-600">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <RightSidebar />
     </div>
   );
 }
