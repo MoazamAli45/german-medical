@@ -26,7 +26,7 @@ export function RightSidebar() {
   return (
     <>
       <button
-        className="fixed right-4 top-4 z-50 rounded-full bg-blue-500 p-2 text-white shadow-lg lg:hidden"
+        className="fixed right-4 top-4 z-50 rounded-full bg-black p-2 text-white shadow-lg lg:hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (

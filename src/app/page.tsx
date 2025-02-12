@@ -51,8 +51,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
-      <main className="pl-16 mlg:pr-72 transition-all duration-300">
-        <div className="p-6">
+      <main className="pl-12 sm:pl-16 mlg:pr-72 transition-all duration-300">
+        <div className="p-1 sm:p-6">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white rounded-lg shadow p-6">
               {/* Header */}

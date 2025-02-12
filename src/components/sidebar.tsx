@@ -18,7 +18,7 @@ export function Sidebar() {
     <div
       className={cn(
         "fixed left-0 top-0 h-full bg-white  transition-all duration-300 z-50",
-        isHovered ? "w-50" : "w-16"
+        isHovered ? "w-40" : "w-14"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
