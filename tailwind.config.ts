@@ -13,6 +13,9 @@ export default {
         foreground: "var(--foreground)",
         gray: "#AEADAD",
       },
+      screens: {
+        mlg: "990px",
+      },
     },
   },
   plugins: [],

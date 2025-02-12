@@ -51,7 +51,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
-      <main className="pl-16 pr-72 transition-all duration-300">
+      <main className="pl-16 mlg:pr-72 transition-all duration-300">
         <div className="p-6">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white rounded-lg shadow p-6">
@@ -62,13 +62,13 @@ export default function Home() {
                   <span className="text-[18px] ">♂</span>
                 </span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-2 max-w-5xl">
                 {inspections.map((inspection) => (
                   <div
                     key={inspection.number}
-                    className="h-[370px] flex flex-col gap-2 group"
+                    className="mlg:h-[370px] flex flex-col gap-2 group"
                   >
-                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 h-[300px] hover:border-color hover:bg-[rgb(168,230,243,.19)]">
+                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 mlg:h-[300px] hover:border-color hover:bg-[rgb(168,230,243,.19)]">
                       <div className="flex flex-col items-center ">
                         <h2 className="font-bold text-lg">
                           Inspection {inspection.number}
@@ -90,7 +90,7 @@ export default function Home() {
               </div>
 
               {/* Legend */}
-              <div className="mt-6 flex gap-6 justify-center">
+              <div className="mt-6 flex flex-col items-start sm:flex-row sm:items-center  gap-6 justify-center">
                 {[
                   { color: "bg-red-500", label: "Abnormal ASP > Refenc ASP" },
                   { color: "bg-blue-500", label: "Abnormal ADP > Refenc ADP" },
@@ -99,8 +99,13 @@ export default function Home() {
                     label: "Refence ASP/ADP > Abnormal ASP/ADP",
                   },
                 ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-2">
-                    <div className={`w-4 h-4 rounded-full ${item.color}`} />
+                  <div
+                    key={item.label}
+                    className="flex  justify-center  items-center gap-2"
+                  >
+                    <div
+                      className={`w-3 h-3 lg:w-4 lg:h-4 rounded-full ${item.color} shrink-0`}
+                    />
                     <span className="text-sm text-gray-600">{item.label}</span>
                   </div>
                 ))}

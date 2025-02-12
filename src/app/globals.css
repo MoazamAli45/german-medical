@@ -24,10 +24,14 @@ body {
   font-size: 16px;
 }
 
-.card-border {
-  border: 1px solid; /* Border width must be set */
-  border-image: linear-gradient(180deg, #5256e7 0%, #a8e6f3 100%);
-  border-image-slice: 1;
+@media (max-width: 990px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+.border-color {
+  @apply border-[1px] border-solid border-[#88B1EF];
 }
 
 .scrollbar-hide::-webkit-scrollbar {
