@@ -68,18 +68,21 @@ export default function Home() {
                     key={inspection.number}
                     className="h-[370px] flex flex-col gap-2 group"
                   >
-                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 h-[300px] hover:card-border hover:bg-[rgb(168,230,243,.19)]">
-                      <div className="flex flex-col items-center mb-4">
-                        <h2 className="font-semibold">
+                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 h-[300px] hover:border-color hover:bg-[rgb(168,230,243,.19)]">
+                      <div className="flex flex-col items-center ">
+                        <h2 className="font-bold text-lg">
                           Inspection {inspection.number}
                         </h2>
+                        <span className="text-sm text-gray-500">
+                          {inspection.date}
+                        </span>
                       </div>
-                      <div className="text-sm text-gray-500 mb-4">
+                      <div className="text-sm text-gray-500 mb-4 text-center">
                         {inspection.age}, {inspection.height}
                       </div>
                       <D3InspectionGraph data={inspection.data} />
                     </div>
-                    <button className="group-hover:opacity-100 opacity-0 bg-blue-50 text-blue-600 px-6 py-2 rounded-lg font-medium hover:bg-blue-100 transition-opacity duration-300">
+                    <button className="group-hover:opacity-100 opacity-0 border-color bg-[rgb(168,230,243,.19)]  px-6 py-2 rounded-lg font-normal  transition-opacity duration-300">
                       Show Details
                     </button>
                   </div>
@@ -97,7 +100,7 @@ export default function Home() {
                   },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${item.color}`} />
+                    <div className={`w-4 h-4 rounded-full ${item.color}`} />
                     <span className="text-sm text-gray-600">{item.label}</span>
                   </div>
                 ))}
