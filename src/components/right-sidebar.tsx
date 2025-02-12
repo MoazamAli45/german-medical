@@ -130,7 +130,7 @@ export function RightSidebar() {
                   </div>
                 </div>
                 <div>{reading.icon}</div>
-                <div className="flex flex-col items-center shrink-0 p-2 !rounded-xl bg-[rgb(168,230,243,.19)] border-[1px] border-solid border-[#88B1EF]">
+                <div className="flex flex-col items-center shrink-0 p-2 !rounded-xl border-[1px] border-solid border-[#88B1EF]">
                   <span className="text-sm text-gray-600">Mean ADP</span>
                   <span className="text-lg font-semibold">{reading.adp}</span>
                   <span className="text-xs text-gray-500">mmHg</span>

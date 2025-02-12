@@ -115,33 +115,37 @@ export function D3InspectionGraph({ data }: InspectionGraphProps) {
       .style("padding", "5px")
       .style("border-radius", "3px");
 
-    g.selectAll("circle.datapoint")
-      .data(data)
-      .enter()
-      .append("circle")
-      .attr("class", "datapoint")
-      .attr(
-        "cx",
-        (d) => radiusScale(d.asp) * Math.cos(angleScale(d.hour) - Math.PI / 2)
-      )
-      .attr(
-        "cy",
-        (d) => radiusScale(d.asp) * Math.sin(angleScale(d.hour) - Math.PI / 2)
-      )
-      .attr("r", 3)
-      .attr("fill", "#ef4444")
-      .on("mouseover", (event, d) => {
-        tooltip
-          .style("visibility", "visible")
-          .html(
-            `Hour: ${d.hour}<br>ASP: ${d.asp}<br>ADP: ${d.adp}<br>MAP: ${d.map}`
-          )
-          .style("top", event.pageY - 10 + "px")
-          .style("left", event.pageX + 10 + "px");
-      })
-      .on("mouseout", () => {
-        tooltip.style("visibility", "hidden");
-      });
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    if (!isMobile) {
+      g.selectAll("circle.datapoint")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", "datapoint")
+        .attr(
+          "cx",
+          (d) => radiusScale(d.asp) * Math.cos(angleScale(d.hour) - Math.PI / 2)
+        )
+        .attr(
+          "cy",
+          (d) => radiusScale(d.asp) * Math.sin(angleScale(d.hour) - Math.PI / 2)
+        )
+        .attr("r", 3)
+        .attr("fill", "#ef4444")
+        .on("mouseover", (event, d) => {
+          tooltip
+            .style("visibility", "visible")
+            .html(
+              `Hour: ${d.hour}<br>ASP: ${d.asp}<br>ADP: ${d.adp}<br>MAP: ${d.map}`
+            )
+            .style("top", event.pageY - 10 + "px")
+            .style("left", event.pageX + 10 + "px");
+        })
+        .on("mouseout", () => {
+          tooltip.style("visibility", "hidden");
+        });
+    }
   }, [data]);
 
   return (

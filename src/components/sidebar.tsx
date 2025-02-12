@@ -30,7 +30,7 @@ export function Sidebar() {
             href={item.href}
             className="flex items-center gap-4 px-2 py-2 text-gray-700 hover:text-primary hover:bg-gray-100  transition-colors w-full"
           >
-            <div className="w-11 h-11 flex items-center justify-center flex-shrink-0 relative">
+            <div className="h-8 w-8 sm:w-11 sm:h-11 flex items-center justify-center flex-shrink-0 relative">
               <Image
                 src={item.icon}
                 alt={item.label}
@@ -40,7 +40,7 @@ export function Sidebar() {
             </div>
             <span
               className={cn(
-                "whitespace-nowrap transition-opacity text-[22px]  text-black",
+                "whitespace-nowrap transition-opacity text-[16px] sm:text-[22px]  text-black",
                 isHovered ? "opacity-100" : "opacity-0",
                 { "text-[#AEADAD] font-bold ": i === 0 }
               )}

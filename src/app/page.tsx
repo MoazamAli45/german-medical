@@ -68,7 +68,7 @@ export default function Home() {
                     key={inspection.number}
                     className="mlg:h-[370px] flex flex-col gap-2 group"
                   >
-                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 mlg:h-[300px] hover:border-color hover:bg-[rgb(168,230,243,.19)]">
+                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 mlg:h-[300px] hover:border-[#88B1EF] border-[1px] border-solid border-[rgb(168,230,243,.19)] hover:bg-[rgb(168,230,243,.19)]">
                       <div className="flex flex-col items-center ">
                         <h2 className="font-bold text-lg">
                           Inspection {inspection.number}
@@ -82,7 +82,7 @@ export default function Home() {
                       </div>
                       <D3InspectionGraph data={inspection.data} />
                     </div>
-                    <button className="group-hover:opacity-100 opacity-0 border-color bg-[rgb(168,230,243,.19)]  px-6 py-2 rounded-lg font-normal  transition-opacity duration-300">
+                    <button className="group-hover:opacity-100 opacity-0 border-color  bg-[rgb(168,230,243,.19)]  px-6 py-2 rounded-lg font-normal  transition-opacity duration-300">
                       Show Details
                     </button>
                   </div>
