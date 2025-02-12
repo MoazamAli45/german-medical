@@ -66,27 +66,22 @@ export default function Home() {
                 {inspections.map((inspection) => (
                   <div
                     key={inspection.number}
-                    className="group bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 h-[300px] hover:border-color hover:bg-[rgb(168,230,243,.19)]"
+                    className="h-[370px] flex flex-col gap-2 group"
                   >
-                    <div className="flex justify-between items-center mb-4">
-                      <h2 className="font-semibold">
-                        Inspection {inspection.number}
-                      </h2>
-                      <span className="text-sm text-gray-500">
-                        {inspection.date}
-                      </span>
+                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 h-[300px] hover:border-color hover:bg-[rgb(168,230,243,.19)]">
+                      <div className="flex flex-col items-center mb-4">
+                        <h2 className="font-semibold">
+                          Inspection {inspection.number}
+                        </h2>
+                      </div>
+                      <div className="text-sm text-gray-500 mb-4">
+                        {inspection.age}, {inspection.height}
+                      </div>
+                      <D3InspectionGraph data={inspection.data} />
                     </div>
-                    <div className="text-sm text-gray-500 mb-4">
-                      {inspection.age}, {inspection.height}
-                    </div>
-                    <D3InspectionGraph data={inspection.data} />
-
-                    {/* Show Details Button - appears on hover */}
-                    <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex justify-center">
-                      <button className="bg-blue-50 text-blue-600 px-6 py-2 rounded-lg font-medium hover:bg-blue-100 transition-colors">
-                        Show Details
-                      </button>
-                    </div>
+                    <button className="group-hover:opacity-100 opacity-0 bg-blue-50 text-blue-600 px-6 py-2 rounded-lg font-medium hover:bg-blue-100 transition-opacity duration-300">
+                      Show Details
+                    </button>
                   </div>
                 ))}
               </div>
