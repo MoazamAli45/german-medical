@@ -68,7 +68,7 @@ export default function Home() {
                     key={inspection.number}
                     className="h-[370px] flex flex-col gap-2 group"
                   >
-                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 h-[300px] hover:border-color hover:bg-[rgb(168,230,243,.19)]">
+                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 h-[300px] hover:card-border hover:bg-[rgb(168,230,243,.19)]">
                       <div className="flex flex-col items-center mb-4">
                         <h2 className="font-semibold">
                           Inspection {inspection.number}
