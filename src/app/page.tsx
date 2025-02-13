@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { Sidebar } from "@/components/sidebar";
 import { RightSidebar } from "@/components/right-sidebar";
 import { D3InspectionGraph } from "@/components/d3-inspection-graph";
+import { useEffect, useState } from "react";
 
 // Sample data for the graphs
 const generateSampleData = () => {
@@ -16,37 +19,94 @@ const generateSampleData = () => {
   return data;
 };
 
+// Generate random AP Mean and AP Load data
+const generateRandomAPData = () => {
+  return {
+    apMean: {
+      asp: {
+        day: Math.floor(Math.random() * 20 + 100),
+        night: Math.floor(Math.random() * 20 + 95),
+        overall: Math.floor(Math.random() * 20 + 105),
+      },
+      adp: {
+        day: Math.floor(Math.random() * 15 + 50),
+        night: Math.floor(Math.random() * 15 + 45),
+        overall: Math.floor(Math.random() * 15 + 55),
+      },
+    },
+    apLoad: {
+      asp: {
+        day: `${Math.floor(Math.random() * 20 + 80)}%`,
+        night: `${Math.floor(Math.random() * 20 + 75)}%`,
+        overall: `${Math.floor(Math.random() * 10 + 90)}%`,
+      },
+      adp: {
+        day: `${Math.floor(Math.random() * 20 + 80)}%`,
+        night: `${Math.floor(Math.random() * 20 + 75)}%`,
+        overall: `${Math.floor(Math.random() * 10 + 90)}%`,
+      },
+    },
+  };
+};
+
+const inspections = [
+  {
+    number: 5,
+    date: "01.02.2011",
+    age: "14y",
+    height: "159cm",
+    data: generateSampleData(),
+    ...generateRandomAPData(),
+    medications: [
+      { name: "Amlodipine", dose: "1x10mg" },
+      { name: "Metoprolol", dose: "1x100mg" },
+      { name: "Hydrochlor", dose: "1x25mg" },
+      { name: "Ramipril", dose: "1x5mg" },
+    ],
+  },
+  {
+    number: 4,
+    date: "11.12.2010",
+    age: "11y",
+    height: "129cm",
+    data: generateSampleData(),
+    ...generateRandomAPData(),
+    medications: [
+      { name: "Amlodipine", dose: "1x5mg" },
+      { name: "Metoprolol", dose: "1x50mg" },
+    ],
+  },
+  {
+    number: 3,
+    date: "05.01.2010",
+    age: "11y",
+    height: "128cm",
+    data: generateSampleData(),
+    ...generateRandomAPData(),
+    medications: [{ name: "Amlodipine", dose: "1x5mg" }],
+  },
+  {
+    number: 1,
+    date: "19.11.2009",
+    age: "10.9y",
+    height: "158cm",
+    data: generateSampleData(),
+    ...generateRandomAPData(),
+    medications: [
+      { name: "Amlodipine", dose: "1x10mg" },
+      { name: "Metoprolol", dose: "1x100mg" },
+      { name: "Hydrochlor", dose: "1x25mg" },
+    ],
+  },
+];
+
 export default function Home() {
-  const inspections = [
-    {
-      number: 5,
-      date: "01.02.2011",
-      age: "14y",
-      height: "159cm",
-      data: generateSampleData(),
-    },
-    {
-      number: 4,
-      date: "11.12.2010",
-      age: "11y",
-      height: "129cm",
-      data: generateSampleData(),
-    },
-    {
-      number: 3,
-      date: "05.01.2010",
-      age: "11y",
-      height: "128cm",
-      data: generateSampleData(),
-    },
-    {
-      number: 1,
-      date: "19.11.2009",
-      age: "10.9y",
-      height: "158cm",
-      data: generateSampleData(),
-    },
-  ];
+  const [activeInspection, setActiveInspection] = useState(inspections[0]);
+
+  useEffect(() => {
+    // Set the first inspection as active by default
+    setActiveInspection(inspections[0]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -68,7 +128,14 @@ export default function Home() {
                     key={inspection.number}
                     className="mlg:h-[370px] flex flex-col gap-2 group"
                   >
-                    <div className="bg-gray-50 rounded-lg p-4 relative hover:shadow-md transition-all duration-300 mlg:h-[300px] hover:border-[#88B1EF] border-[1px] border-solid border-[rgb(168,230,243,.19)] hover:bg-[rgb(168,230,243,.19)]">
+                    <div
+                      className={`bg-gray-50 rounded-lg p-4 relative transition-all duration-300 mlg:h-[300px] border-[1px] border-solid cursor-pointer ${
+                        activeInspection.number === inspection.number
+                          ? "border-[#88B1EF] bg-[rgb(168,230,243,.19)] shadow-md"
+                          : "border-[rgb(168,230,243,.19)] hover:border-[#88B1EF] hover:bg-[rgb(168,230,243,.19)] hover:shadow-md"
+                      }`}
+                      onClick={() => setActiveInspection(inspection)}
+                    >
                       <div className="flex flex-col items-center ">
                         <h2 className="font-bold text-lg">
                           Inspection {inspection.number}
@@ -82,9 +149,11 @@ export default function Home() {
                       </div>
                       <D3InspectionGraph data={inspection.data} />
                     </div>
-                    <button className="group-hover:opacity-100 opacity-0 border-color  bg-[rgb(168,230,243,.19)]  px-6 py-2 rounded-lg font-normal  transition-opacity duration-300">
-                      Show Details
-                    </button>
+                    {activeInspection.number === inspection.number && (
+                      <button className="border-color bg-[rgb(168,230,243,.19)] px-6 py-2 rounded-lg font-normal">
+                        Show Details
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
@@ -114,7 +183,7 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <RightSidebar />
+      <RightSidebar inspection={activeInspection} />
     </div>
   );
 }

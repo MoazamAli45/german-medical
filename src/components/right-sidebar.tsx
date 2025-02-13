@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -5,7 +6,7 @@ import Sun from "@/icons/icon-1.svg";
 import Moon from "@/icons/icon-2.svg";
 import Star from "@/icons/icon-3.svg";
 
-export function RightSidebar() {
+export function RightSidebar({ inspection }: any) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -22,6 +23,10 @@ export function RightSidebar() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  if (!inspection) {
+    return null;
+  }
 
   return (
     <>
@@ -67,19 +72,23 @@ export function RightSidebar() {
         } lg:translate-x-0`}
       >
         {/* Inspection Header */}
-        <div className="mb-6 p-3 text-center !rounded-full bg-[rgb(168,230,243,.19)] border-[1px] border-solid border-[#88B1EF]">
-          <h2 className="text-lg font-medium">Inspection 5</h2>
-          <p className="text-sm text-gray-600">14y, 159cm</p>
+        <div className="mb-6 px-3 py-[4px] text-center !rounded-full bg-[rgb(168,230,243,.19)] border-[1px] border-solid border-[#88B1EF]">
+          <h2 className="text-[24px] font-bold leading-tight">
+            Inspection {inspection.number}
+          </h2>
+          <p className="text-[19px] text-black font-normal leading-tight">
+            {inspection.age}, {inspection.height}
+          </p>
         </div>
 
         {/* AP Mean Section */}
         <div className="mb-6 !rounded-xl  border-[1px] border-solid border-[#AEADAD]">
-          <h2 className="text-lg font-semibold text-center mb-4">AP Mean</h2>
+          <h2 className="text-[24px] font-bold text-center mb-4">AP Mean</h2>
           <div className="space-y-3">
             {[
               {
                 time: "Mean ASP",
-                value: "108",
+                value: inspection.apMean.asp.day,
                 icon: (
                   <Image
                     src={Sun || "/placeholder.svg"}
@@ -87,11 +96,11 @@ export function RightSidebar() {
                     className="h-7 w-12"
                   />
                 ),
-                adp: "58",
+                adp: inspection.apMean.adp.day,
               },
               {
                 time: "Mean ASP",
-                value: "111",
+                value: inspection.apMean.asp.overall,
                 icon: (
                   <Image
                     src={Star || "/placeholder.svg"}
@@ -99,11 +108,11 @@ export function RightSidebar() {
                     className="h-[18px] w-[18px]"
                   />
                 ),
-                adp: "60",
+                adp: inspection.apMean.adp.overall,
               },
               {
                 time: "Mean ASP",
-                value: "103",
+                value: inspection.apMean.asp.night,
                 icon: (
                   <Image
                     src={Moon || "/placeholder.svg"}
@@ -111,22 +120,25 @@ export function RightSidebar() {
                     className="h-[18px] w-[18px]"
                   />
                 ),
-                adp: "51",
+                adp: inspection.apMean.adp.night,
               },
             ].map((reading, index) => (
               <div
                 key={index}
-                className="flex justify-between gap-1 items-center bg-gray-50 rounded-xl p-3"
+                className="flex justify-between gap-1 items-center bg-gray-50 rounded-[25px] p-3"
               >
                 <div className="flex items-center gap-3 shrink-0">
                   <div className="flex flex-col items-center justify-center p-2 w-[90px] !rounded-xl  border-[1px] border-solid border-gray">
+                    <div className="flex gap-1 items-center">
+                      <span className="text-lg font-semibold">
+                        {reading.value}
+                      </span>
+                      <span className="text-xs text-gray-500">mmHg</span>
+                    </div>
+
                     <span className="text-sm text-gray-600">
                       {reading.time}
                     </span>
-                    <span className="text-lg font-semibold">
-                      {reading.value}
-                    </span>
-                    <span className="text-xs text-gray-500">mmHg</span>
                   </div>
                 </div>
                 <div>{reading.icon}</div>
@@ -153,8 +165,8 @@ export function RightSidebar() {
 
             {[
               {
-                asp: "92%",
-                adp: "94%",
+                asp: inspection.apLoad.asp.day,
+                adp: inspection.apLoad.adp.day,
                 icon: (
                   <Image
                     src={Sun || "/placeholder.svg"}
@@ -164,8 +176,8 @@ export function RightSidebar() {
                 ),
               },
               {
-                asp: "100%",
-                adp: "100%",
+                asp: inspection.apLoad.asp.overall,
+                adp: inspection.apLoad.adp.overall,
                 icon: (
                   <Image
                     src={Star || "/placeholder.svg"}
@@ -175,8 +187,8 @@ export function RightSidebar() {
                 ),
               },
               {
-                asp: "83%",
-                adp: "83%",
+                asp: inspection.apLoad.asp.night,
+                adp: inspection.apLoad.adp.night,
                 icon: (
                   <Image
                     src={Moon || "/placeholder.svg"}
@@ -231,12 +243,7 @@ export function RightSidebar() {
         <div className="rounded-3xl border border-[#AEADAD] my-4 bg-white">
           <h2 className="text-lg font-semibold text-center">Medications</h2>
           <div className="space-y-2">
-            {[
-              { name: "Amlodipine", dose: "1x10mg" },
-              { name: "Metoprolol", dose: "1x100mg" },
-              { name: "Hydrochlor", dose: "1x25mg" },
-              { name: "Ramipril", dose: "1x5mg" },
-            ].map((med) => (
+            {inspection.medications.map((med: any) => (
               <div
                 key={med.name}
                 className="flex justify-between items-center p-3 bg-gray-50 rounded-xl"
