@@ -11,7 +11,7 @@ export function RightSidebar({ inspection }: any) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 990) {
+      if (window.innerWidth > 1024) {
         setIsOpen(true);
       } else {
         setIsOpen(false);
@@ -67,7 +67,7 @@ export function RightSidebar({ inspection }: any) {
         )}
       </button>
       <div
-        className={`fixed right-0 top-0 h-full w-[300px] bg-white p-4 overflow-y-auto border-gray-200 scrollbar-hide transition-transform duration-300 ease-in-out ${
+        className={`fixed right-0 top-0 h-full w-[360px] bg-white p-4 overflow-y-auto border-gray-200 scrollbar-hide transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } lg:translate-x-0`}
       >
@@ -82,9 +82,9 @@ export function RightSidebar({ inspection }: any) {
         </div>
 
         {/* AP Mean Section */}
-        <div className="mb-6 !rounded-xl  border-[1px] border-solid border-[#AEADAD]">
+        <div className="mb-6 !rounded-xl py-1  border-[1px] border-solid border-[#AEADAD]">
           <h2 className="text-[24px] font-bold text-center mb-4">AP Mean</h2>
-          <div className="space-y-3">
+          <div className="space-y-3 pt-2  pb-6">
             {[
               {
                 time: "Mean ASP",
@@ -93,7 +93,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Sun || "/placeholder.svg"}
                     alt="Sun"
-                    className="h-7 w-12"
+                    className="h-[25px] w-[70px]"
                   />
                 ),
                 adp: inspection.apMean.adp.day,
@@ -105,7 +105,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Star || "/placeholder.svg"}
                     alt="Star"
-                    className="h-[18px] w-[18px]"
+                    className="h-[25px] w-[25px]"
                   />
                 ),
                 adp: inspection.apMean.adp.overall,
@@ -117,7 +117,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Moon || "/placeholder.svg"}
                     alt="Moon"
-                    className="h-[18px] w-[18px]"
+                    className="h-[25px] w-[25px]"
                   />
                 ),
                 adp: inspection.apMean.adp.night,
@@ -125,27 +125,31 @@ export function RightSidebar({ inspection }: any) {
             ].map((reading, index) => (
               <div
                 key={index}
-                className="flex justify-between gap-1 items-center bg-gray-50 rounded-[25px] p-3"
+                className="flex items-center justify-center gap-1  "
               >
-                <div className="flex items-center gap-3 shrink-0">
-                  <div className="flex flex-col items-center justify-center p-2 w-[90px] !rounded-xl  border-[1px] border-solid border-gray">
+                <div className="flex items-center gap-3 shrink-0 ">
+                  <div className="flex flex-col items-center justify-center p-1 w-[110px] h-[101px] rounded-[25px]  border-[1px] border-solid border-gray">
                     <div className="flex gap-1 items-center">
-                      <span className="text-lg font-semibold">
+                      <span className="text-[19px] font-bold">
                         {reading.value}
                       </span>
-                      <span className="text-xs text-gray-500">mmHg</span>
+                      <span className="text-[14px] ">mmHg</span>
                     </div>
 
-                    <span className="text-sm text-gray-600">
+                    <span className="text-[19px]  font-bold">
                       {reading.time}
                     </span>
                   </div>
                 </div>
-                <div>{reading.icon}</div>
-                <div className="flex flex-col items-center shrink-0 p-2 !rounded-xl border-[1px] border-solid border-gray">
-                  <span className="text-sm text-gray-600">Mean ADP</span>
-                  <span className="text-lg font-semibold">{reading.adp}</span>
-                  <span className="text-xs text-gray-500">mmHg</span>
+                <div className="w-[75px] flex items-center justify-center">
+                  {reading.icon}
+                </div>
+                <div className="flex flex-col items-center justify-center shrink-0 p-1 rounded-[25px] w-[110px] h-[101px] border-[1px] border-solid border-gray">
+                  <div className="flex gap-1 items-center ">
+                    <span className="text-[19px] font-bold">{reading.adp}</span>
+                    <span className="text-[14px] ">mmHg</span>
+                  </div>
+                  <span className="text-[19px]  font-bold">Mean ADP</span>
                 </div>
               </div>
             ))}
@@ -153,16 +157,15 @@ export function RightSidebar({ inspection }: any) {
         </div>
 
         {/* AP Load Section */}
-        <div className="w-full max-w-2xl px-6 pb-4 rounded-3xl border border-[#AEADAD] bg-white">
-          <h2 className="text-lg font-semibold mb-3 text-center">AP Load</h2>
+        <div className="w-full max-w-2xl px-6 pb-4 py-1 rounded-3xl border border-[#AEADAD] bg-white">
+          <h2 className="text-[24px] font-bold mb-3 text-center">AP Load</h2>
 
+          <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center">
+            <div className="text-[19px] font-bold text-center">ASP</div>
+            <div className="text-[19px] font-bold text-center"></div>
+            <div className="text-[19px] font-bold text-center">ADP</div>
+          </div>
           <div className="space-y-6">
-            <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center">
-              <div className="text-sm font-bold text-center">ASP</div>
-              <div className="text-sm font-bold text-center"></div>
-              <div className="text-sm font-bold text-center">ADP</div>
-            </div>
-
             {[
               {
                 asp: inspection.apLoad.asp.day,
@@ -171,7 +174,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Sun || "/placeholder.svg"}
                     alt="Sun"
-                    className="h-8 w-12"
+                    className="h-[20px] w-[57px]"
                   />
                 ),
               },
@@ -182,7 +185,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Star || "/placeholder.svg"}
                     alt="Star"
-                    className="h-[18px] w-[18px]"
+                    className="h-[20px] w-[20px]"
                   />
                 ),
               },
@@ -193,14 +196,14 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Moon || "/placeholder.svg"}
                     alt="Moon"
-                    className="h-[18px] w-[18px]"
+                    className="h-[20px] w-[20px]"
                   />
                 ),
               },
             ].map((item, index) => (
               <div
                 key={index}
-                className="grid grid-cols-[1fr_1fr_1fr] gap-4 items-center"
+                className="grid grid-cols-[1fr_1fr_1fr] gap-4  items-center"
               >
                 {/* ASP Bar */}
                 <div className="flex items-center shrink-0">
@@ -209,7 +212,7 @@ export function RightSidebar({ inspection }: any) {
                       className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
                       style={{ width: item.asp }}
                     >
-                      <span className="absolute left-1 top-1/2 -translate-y-1/2 font-semibold text-black text-sm">
+                      <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[14px]">
                         {item.asp}
                       </span>
                     </div>
@@ -240,16 +243,16 @@ export function RightSidebar({ inspection }: any) {
         </div>
 
         {/* Medications Section */}
-        <div className="rounded-3xl border border-[#AEADAD] my-4 bg-white">
-          <h2 className="text-lg font-semibold text-center">Medications</h2>
+        <div className="rounded-3xl border py-1 border-[#AEADAD] my-4 bg-white">
+          <h2 className="text-[24px font-bold text-center">Medications</h2>
           <div className="space-y-2">
             {inspection.medications.map((med: any) => (
               <div
                 key={med.name}
                 className="flex justify-between items-center p-3 bg-gray-50 rounded-xl"
               >
-                <span className="font-medium">{med.name}</span>
-                <span className="text-sm text-gray-600">{med.dose}</span>
+                <span className="font-bold text-[14px]">{med.name}</span>
+                <span className="text-[14px] font-semibold">{med.dose}</span>
               </div>
             ))}
           </div>

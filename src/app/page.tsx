@@ -4,6 +4,7 @@ import { Sidebar } from "@/components/sidebar";
 import { RightSidebar } from "@/components/right-sidebar";
 import { D3InspectionGraph } from "@/components/d3-inspection-graph";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 // Sample data for the graphs
 const generateSampleData = () => {
@@ -111,7 +112,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
-      <main className="pl-12 sm:pl-16 mlg:pr-72 transition-all duration-300">
+      <main className="pl-12 sm:pl-16 lg:pr-[340px] transition-all duration-300">
         <div className="p-1 sm:p-6">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white rounded-lg shadow p-6">
@@ -122,14 +123,14 @@ export default function Home() {
                   <span className="text-[18px] ">♂</span>
                 </span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-2 max-w-5xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 py-2 max-w-5xl">
                 {inspections.map((inspection) => (
                   <div
                     key={inspection.number}
-                    className="mlg:h-[370px] flex flex-col gap-2 group"
+                    className=" flex flex-col gap-2 group"
                   >
                     <div
-                      className={`bg-gray-50 rounded-lg p-4 relative transition-all duration-300 mlg:h-[300px] border-[1px] border-solid cursor-pointer ${
+                      className={`bg-gray-50 rounded-lg p-4 relative transition-all duration-300  border-[1px] border-solid cursor-pointer ${
                         activeInspection.number === inspection.number
                           ? "border-[#88B1EF] bg-[rgb(168,230,243,.19)] shadow-md"
                           : "border-[rgb(168,230,243,.19)] hover:border-[#88B1EF] hover:bg-[rgb(168,230,243,.19)] hover:shadow-md"
@@ -149,11 +150,18 @@ export default function Home() {
                       </div>
                       <D3InspectionGraph data={inspection.data} />
                     </div>
-                    {activeInspection.number === inspection.number && (
-                      <button className="border-color bg-[rgb(168,230,243,.19)] px-6 py-2 rounded-lg font-normal">
+                    {
+                      <button
+                        className={cn(
+                          "border-color bg-[rgb(168,230,243,.19)] px-6 py-2 rounded-lg font-normal",
+                          activeInspection.number === inspection.number
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      >
                         Show Details
                       </button>
-                    )}
+                    }
                   </div>
                 ))}
               </div>
