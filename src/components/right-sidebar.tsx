@@ -133,7 +133,7 @@ export function RightSidebar({ inspection }: any) {
                   <div className="flex flex-col items-center justify-center p-1 w-[100px] h-[100px]  sm:w-[110px] sm:h-[101px] rounded-[25px]  border-[1px] border-solid border-gray">
                     <div className="flex gap-1 items-center">
                       <span className="text-[16px] sm:text-[19px] font-bold">
-                        {reading.value}
+                        {reading.value.toFixed(1)}
                       </span>
                       <span className="text-[14px] ">mmHg</span>
                     </div>
@@ -149,7 +149,7 @@ export function RightSidebar({ inspection }: any) {
                 <div className="flex flex-col items-center justify-center shrink-0 p-1 rounded-[25px] w-[100px] h-[100px]  sm:w-[110px] sm:h-[101px] border-[1px] border-solid border-gray">
                   <div className="flex gap-1 items-center ">
                     <span className="text-[16px] sm:text-[19px] font-bold">
-                      {reading.adp}
+                      {reading.adp.toFixed(1)}
                     </span>
                     <span className="text-[14px] ">mmHg</span>
                   </div>
@@ -222,10 +222,10 @@ export function RightSidebar({ inspection }: any) {
                   <div className="h-4 w-full bg-[#AEADAD] overflow-hidden">
                     <div
                       className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
-                      style={{ width: item.asp }}
+                      style={{ width: `${Math.abs(item.asp).toFixed(1)}%` }}
                     >
                       <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[14px]">
-                        {item.asp}
+                        {Math.abs(item.asp).toFixed(1)}
                       </span>
                     </div>
                   </div>
@@ -241,10 +241,10 @@ export function RightSidebar({ inspection }: any) {
                   <div className="h-4 w-full bg-[#AEADAD] overflow-hidden">
                     <div
                       className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
-                      style={{ width: item.adp }}
+                      style={{ width: `${Math.abs(item.adp).toFixed(1)}%` }}
                     >
                       <span className="absolute left-1 top-1/2 -translate-y-1/2 font-semibold text-black text-sm">
-                        {item.adp}
+                        {Math.abs(item.asp).toFixed(1)}
                       </span>
                     </div>
                   </div>
