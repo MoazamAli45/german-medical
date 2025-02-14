@@ -67,23 +67,25 @@ export function RightSidebar({ inspection }: any) {
         )}
       </button>
       <div
-        className={`fixed right-0 top-0 h-full w-[360px] bg-white p-4 overflow-y-auto border-gray-200 scrollbar-hide transition-transform duration-300 ease-in-out ${
+        className={`fixed right-0 top-0 h-full w-[300px] sm:w-[360px] bg-white p-4 overflow-y-auto border-gray-200 scrollbar-hide transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } lg:translate-x-0`}
       >
         {/* Inspection Header */}
         <div className="mb-6 px-3 py-[4px] text-center !rounded-full bg-[rgb(168,230,243,.19)] border-[1px] border-solid border-[#88B1EF]">
-          <h2 className="text-[24px] font-bold leading-tight">
+          <h2 className="text-[20px] sm:text-[24px] font-bold leading-tight">
             Inspection {inspection.number}
           </h2>
-          <p className="text-[19px] text-black font-normal leading-tight">
+          <p className="text-[16px] sm:text-[19px] text-black font-normal leading-tight">
             {inspection.age}, {inspection.height}
           </p>
         </div>
 
         {/* AP Mean Section */}
         <div className="mb-6 !rounded-xl py-1  border-[1px] border-solid border-[#AEADAD]">
-          <h2 className="text-[24px] font-bold text-center mb-4">AP Mean</h2>
+          <h2 className="text-[20px] sm:text-[24px] font-bold text-center mb-4">
+            AP Mean
+          </h2>
           <div className="space-y-3 pt-2  pb-6">
             {[
               {
@@ -93,7 +95,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Sun || "/placeholder.svg"}
                     alt="Sun"
-                    className="h-[25px] w-[70px]"
+                    className="h-[20px] w-[60px] sm:h-[25px] sm:w-[70px]"
                   />
                 ),
                 adp: inspection.apMean.adp.day,
@@ -105,7 +107,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Star || "/placeholder.svg"}
                     alt="Star"
-                    className="h-[25px] w-[25px]"
+                    className="h-[20px] w-[20px] sm:h-[25px] sm:w-[25px]"
                   />
                 ),
                 adp: inspection.apMean.adp.overall,
@@ -117,7 +119,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Moon || "/placeholder.svg"}
                     alt="Moon"
-                    className="h-[25px] w-[25px]"
+                    className="h-[20px] w-[20px] sm:h-[25px] sm:w-[25px]"
                   />
                 ),
                 adp: inspection.apMean.adp.night,
@@ -125,18 +127,18 @@ export function RightSidebar({ inspection }: any) {
             ].map((reading, index) => (
               <div
                 key={index}
-                className="flex items-center justify-center gap-1  "
+                className="flex items-center justify-center gap-1 px-1  "
               >
                 <div className="flex items-center gap-3 shrink-0 ">
-                  <div className="flex flex-col items-center justify-center p-1 w-[110px] h-[101px] rounded-[25px]  border-[1px] border-solid border-gray">
+                  <div className="flex flex-col items-center justify-center p-1 w-[100px] h-[100px]  sm:w-[110px] sm:h-[101px] rounded-[25px]  border-[1px] border-solid border-gray">
                     <div className="flex gap-1 items-center">
-                      <span className="text-[19px] font-bold">
+                      <span className="text-[16px] sm:text-[19px] font-bold">
                         {reading.value}
                       </span>
                       <span className="text-[14px] ">mmHg</span>
                     </div>
 
-                    <span className="text-[19px]  font-bold">
+                    <span className="text-[16px] sm:text-[19px]  font-bold">
                       {reading.time}
                     </span>
                   </div>
@@ -144,12 +146,16 @@ export function RightSidebar({ inspection }: any) {
                 <div className="w-[75px] flex items-center justify-center">
                   {reading.icon}
                 </div>
-                <div className="flex flex-col items-center justify-center shrink-0 p-1 rounded-[25px] w-[110px] h-[101px] border-[1px] border-solid border-gray">
+                <div className="flex flex-col items-center justify-center shrink-0 p-1 rounded-[25px] w-[100px] h-[100px]  sm:w-[110px] sm:h-[101px] border-[1px] border-solid border-gray">
                   <div className="flex gap-1 items-center ">
-                    <span className="text-[19px] font-bold">{reading.adp}</span>
+                    <span className="text-[16px] sm:text-[19px] font-bold">
+                      {reading.adp}
+                    </span>
                     <span className="text-[14px] ">mmHg</span>
                   </div>
-                  <span className="text-[19px]  font-bold">Mean ADP</span>
+                  <span className="text-[16px] sm:text-[19px]  font-bold">
+                    Mean ADP
+                  </span>
                 </div>
               </div>
             ))}
@@ -158,12 +164,18 @@ export function RightSidebar({ inspection }: any) {
 
         {/* AP Load Section */}
         <div className="w-full max-w-2xl px-6 pb-4 py-1 rounded-3xl border border-[#AEADAD] bg-white">
-          <h2 className="text-[24px] font-bold mb-3 text-center">AP Load</h2>
+          <h2 className="text-[20px] sm:text-[24px] font-bold mb-3 text-center">
+            AP Load
+          </h2>
 
           <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center">
-            <div className="text-[19px] font-bold text-center">ASP</div>
-            <div className="text-[19px] font-bold text-center"></div>
-            <div className="text-[19px] font-bold text-center">ADP</div>
+            <div className="text-[16px] sm:text-[19px] font-bold text-center">
+              ASP
+            </div>
+            <div className="text-[16px] sm:text-[19px] font-bold text-center"></div>
+            <div className="text-[16px] sm:text-[19px] font-bold text-center">
+              ADP
+            </div>
           </div>
           <div className="space-y-6">
             {[
@@ -174,7 +186,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Sun || "/placeholder.svg"}
                     alt="Sun"
-                    className="h-[20px] w-[57px]"
+                    className="h-[18px] w-[55px] sm:h-[20px] sm:w-[57px]"
                   />
                 ),
               },
@@ -185,7 +197,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Star || "/placeholder.svg"}
                     alt="Star"
-                    className="h-[20px] w-[20px]"
+                    className="w-[18px] h-[18px] sm:h-[20px] sm:w-[20px]"
                   />
                 ),
               },
@@ -196,7 +208,7 @@ export function RightSidebar({ inspection }: any) {
                   <Image
                     src={Moon || "/placeholder.svg"}
                     alt="Moon"
-                    className="h-[20px] w-[20px]"
+                    className="w-[18px] h-[18px] sm:h-[20px] sm:w-[20px]"
                   />
                 ),
               },

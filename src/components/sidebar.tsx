@@ -18,7 +18,7 @@ export function Sidebar() {
     <div
       className={cn(
         "fixed left-0 top-0 h-full bg-white  transition-all duration-300 z-50",
-        isHovered ? "w-40 sm:w-[200px]" : "w-14 sm:w-16"
+        isHovered ? "w-40 sm:w-[240px]" : "w-14 sm:w-16"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -40,7 +40,7 @@ export function Sidebar() {
             </div>
             <span
               className={cn(
-                "whitespace-nowrap transition-opacity text-[16px] sm:text-[22px]  text-black",
+                "whitespace-nowrap transition-opacity text-[16px] sm:text-[24px]  text-black",
                 isHovered ? "opacity-100" : "opacity-0",
                 { "text-[#AEADAD] font-bold ": i === 0 }
               )}
