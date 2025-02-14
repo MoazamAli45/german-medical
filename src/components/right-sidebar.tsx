@@ -224,7 +224,7 @@ export function RightSidebar({ inspection }: any) {
                       className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
                       style={{ width: `${Math.abs(item.asp).toFixed(1)}%` }}
                     >
-                      <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[14px]">
+                      <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[12px] sm:text-[14px]">
                         {Math.abs(item.asp).toFixed(1)}
                       </span>
                     </div>
@@ -243,8 +243,8 @@ export function RightSidebar({ inspection }: any) {
                       className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
                       style={{ width: `${Math.abs(item.adp).toFixed(1)}%` }}
                     >
-                      <span className="absolute left-1 top-1/2 -translate-y-1/2 font-semibold text-black text-sm">
-                        {Math.abs(item.asp).toFixed(1)}
+                      <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[12px] sm:text-[14px]">
+                        {Math.abs(item.adp).toFixed(1)}
                       </span>
                     </div>
                   </div>
