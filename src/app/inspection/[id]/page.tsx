@@ -1,7 +1,7 @@
 import { DifferenceChart } from "@/components/details/difference-chart";
 import Heatmap from "@/components/details/heatmap-chart";
 import InspectionCharts from "@/components/details/inspection-charts";
-// import { RightSidebar } from "@/components/right-sidebar";
+import { RightSidebar } from "@/components/details/medical-sidebar";
 import { Sidebar } from "@/components/sidebar";
 
 const page = ({ params }: any) => {
@@ -23,7 +23,7 @@ const page = ({ params }: any) => {
           </div>
         </div>
       </div>
-      {/* <RightSidebar inspection={activeInspection} /> */}
+      <RightSidebar id={params?.id} />
     </div>
   );
 };
