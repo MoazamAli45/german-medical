@@ -6,6 +6,7 @@ import { D3InspectionGraph } from "@/components/d3-inspection-graph";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
+import Link from "next/link";
 
 export default function Home() {
   const [inspections, setInspections] = useState<any[]>([]);
@@ -82,16 +83,17 @@ export default function Home() {
                           <D3InspectionGraph data={inspection.data} />
                         </div>
                         {
-                          <button
+                          <Link
+                            href={`/inspection/${inspection.number}`}
                             className={cn(
-                              "border-color bg-[rgb(168,230,243,.19)] px-6 py-2 rounded-lg font-normal text-[16px] sm:text-[19px]",
+                              "border-color bg-[rgb(168,230,243,.19)] px-6 py-2 text-center rounded-lg font-normal text-[16px] sm:text-[19px]",
                               activeInspection.number === inspection.number
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}
                           >
                             Show Details
-                          </button>
+                          </Link>
                         }
                       </div>
                     ))}
