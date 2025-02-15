@@ -5,23 +5,7 @@ import InspectionCharts from "@/components/details/inspection-charts";
 import { Sidebar } from "@/components/sidebar";
 import { differenceData } from "@/lib/sample-data";
 
-import { Metadata } from "next";
-
-interface InspectionPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export async function generateMetadata({
-  params,
-}: InspectionPageProps): Promise<Metadata> {
-  return {
-    title: `Inspection ${params.id}`,
-  };
-}
-
-const page = ({ params }: InspectionPageProps) => {
+const page = ({ params }: any) => {
   console.log("Params", params?.id);
   return (
     <div className="min-h-screen bg-gray-50">
