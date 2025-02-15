@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { D3InspectionGraph } from "./inspection-graph";
 import Loader from "../loader";
+import { D3InspectionGraph } from "../d3-inspection-graph";
 
 interface InspectionData {
   age: string;
@@ -123,11 +123,7 @@ export default function InspectionCharts({ id }: { id: string }) {
             </div>
           </div>
 
-          <D3InspectionGraph
-            data={data1.data}
-            isDifference={true}
-            comparisonData={data2.data}
-          />
+          <D3InspectionGraph data={data2.data} />
         </div>
       )}
     </div>
