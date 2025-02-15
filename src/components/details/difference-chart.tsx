@@ -16,7 +16,7 @@ interface ApiResponse {
 export function DifferenceChart({
   id,
   width = 800,
-  height = 300,
+  height = 500, // Increased height to accommodate legends
 }: DifferenceChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [data, setData] = useState<number[][]>([]);
@@ -41,7 +41,8 @@ export function DifferenceChart({
     if (!svgRef.current || !data.length) return;
 
     const svg = d3.select(svgRef.current);
-    const margin = { top: 40, right: 20, bottom: 60, left: 40 };
+    // Increased bottom margin to accommodate legends
+    const margin = { top: 40, right: 20, bottom: 100, left: 40 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -65,9 +66,9 @@ export function DifferenceChart({
 
     // Add background sections
     const sections = [
-      { color: "#fef3c7", width: innerWidth * 0.4 }, // Yellow
-      { color: "#dbeafe", width: innerWidth * 0.4 }, // Blue
-      { color: "#e5e7eb", width: innerWidth * 0.2 }, // Gray
+      { color: "#fef3c7", width: innerWidth * 0.4 },
+      { color: "#dbeafe", width: innerWidth * 0.4 },
+      { color: "#e5e7eb", width: innerWidth * 0.2 },
     ];
 
     let currentX = 0;
@@ -123,40 +124,59 @@ export function DifferenceChart({
       .attr("class", "text-base font-semibold")
       .text("Difference Inspection Chart");
 
-    // Add legend
+    // Add legend with improved layout
+    const legendItemsPerRow = 4;
+    const legendItemWidth = 150;
+    const legendItemHeight = 20;
+
     const legend = svg
       .append("g")
-      .attr("transform", `translate(${margin.left},${height - 20})`);
+      .attr(
+        "transform",
+        `translate(${margin.left},${height - margin.bottom + 20})`
+      );
 
     for (let i = 0; i < numColumns; i++) {
+      const row = Math.floor(i / legendItemsPerRow);
+      const col = i % legendItemsPerRow;
       const color = colorScale(i.toString());
       const dash = i % 2 === 0 ? "none" : "4,4";
       const label = `Series ${i + 1}`;
 
-      const g = legend.append("g").attr("transform", `translate(${i * 100},0)`);
+      const g = legend
+        .append("g")
+        .attr(
+          "transform",
+          `translate(${col * legendItemWidth},${row * legendItemHeight})`
+        );
 
       g.append("line")
         .attr("x1", 0)
         .attr("x2", 20)
+        .attr("y1", 8)
+        .attr("y2", 8)
         .attr("stroke", color)
         .attr("stroke-width", 1.5)
         .attr("stroke-dasharray", dash);
 
       g.append("text")
         .attr("x", 25)
-        .attr("y", 4)
+        .attr("y", 12)
         .text(label)
         .attr("font-size", "12px");
     }
   }, [data, width, height]);
 
   return (
-    <svg
-      ref={svgRef}
-      width={width}
-      height={height}
-      className="w-full"
-      style={{ maxWidth: "100%", height: "auto" }}
-    />
+    <div className="w-full overflow-x-auto">
+      <svg
+        ref={svgRef}
+        width={width}
+        height={height}
+        className="w-full"
+        style={{ minWidth: "600px", height: "auto" }}
+        preserveAspectRatio="xMidYMid meet"
+      />
+    </div>
   );
 }

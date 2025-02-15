@@ -19,7 +19,7 @@ const page = ({ params }: any) => {
           </div>
           {/* Bottom Chart */}
           <div className=" rounded-lg p-4 md:col-span-3 md:col-start-3  ">
-            <DifferenceChart id={1} />
+            <DifferenceChart id={params?.id} width={800} height={500} />
           </div>
         </div>
       </div>
