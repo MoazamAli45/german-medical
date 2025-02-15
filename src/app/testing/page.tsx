@@ -1,245 +1,3 @@
-// "use client";
-
-// import { useEffect, useRef } from "react";
-// import * as d3 from "d3";
-
-// const NORMAL_ASP = 120;
-// const NORMAL_ADP = 80;
-// const DATA_POINTS = 40;
-
-// // Utility functions
-// function generateConstantValues(value: number, count: number) {
-//   return Array(count).fill(value);
-// }
-
-// function generateRandomValuesWithMean(mean: number, count: number) {
-//   return Array(count)
-//     .fill(0)
-//     .map(() => mean + (Math.random() - 0.5) * 30);
-// }
-
-// function generateAngles(count: number) {
-//   return Array(count)
-//     .fill(0)
-//     .map((_, i) => (i * 360) / count);
-// }
-
-// export default function BloodPressureChart() {
-//   const svgRef = useRef<SVGSVGElement>(null);
-
-//   useEffect(() => {
-//     if (!svgRef.current) return;
-
-//     // Clear previous content
-//     d3.select(svgRef.current).selectAll("*").remove();
-
-//     // Generate data
-//     const angles = generateAngles(DATA_POINTS);
-//     const normalASP = generateConstantValues(NORMAL_ASP, DATA_POINTS);
-//     const normalADP = generateConstantValues(NORMAL_ADP, DATA_POINTS);
-//     const anormalASP = generateRandomValuesWithMean(NORMAL_ASP, DATA_POINTS);
-//     const anormalADP = generateRandomValuesWithMean(NORMAL_ADP, DATA_POINTS);
-
-//     // Setup dimensions
-//     const width = 600;
-//     const height = 600;
-//     const margin = 50;
-//     const radius = Math.min(width, height) / 2 - margin;
-
-//     // Create SVG
-//     const svg = d3
-//       .select(svgRef.current)
-//       .attr("width", width)
-//       .attr("height", height)
-//       .append("g")
-//       .attr("transform", `translate(${width / 2},${height / 2})`);
-
-//     // Create scales
-//     const angleScale = d3
-//       .scaleLinear()
-//       .domain([0, 360])
-//       .range([0, 2 * Math.PI]);
-
-//     const radiusScale = d3.scaleLinear().domain([0, 200]).range([0, radius]);
-
-//     // Create line generator
-//     const lineGenerator = d3
-//       .lineRadial<[number, number]>()
-//       .angle((d) => angleScale(d[0]))
-//       .radius((d) => radiusScale(d[1]));
-
-//     // Create data points
-//     const normalASPPoints = angles.map(
-//       (angle, i) => [angle, normalASP[i]] as [number, number]
-//     );
-//     const normalADPPoints = angles.map(
-//       (angle, i) => [angle, normalADP[i]] as [number, number]
-//     );
-//     const anormalASPPoints = angles.map(
-//       (angle, i) => [angle, anormalASP[i]] as [number, number]
-//     );
-//     const anormalADPPoints = angles.map(
-//       (angle, i) => [angle, anormalADP[i]] as [number, number]
-//     );
-
-//     // Draw grid circles and labels
-//     const gridValues = [0, 40, 80, 120, 160, 200];
-//     gridValues.forEach((value) => {
-//       svg
-//         .append("circle")
-//         .attr("r", radiusScale(value))
-//         .attr("fill", "none")
-//         .attr("stroke", "#ddd")
-//         .attr("stroke-dasharray", "2,2");
-
-//       svg
-//         .append("text")
-//         .attr("y", -radiusScale(value))
-//         .attr("dy", "0.35em")
-//         .attr("text-anchor", "middle")
-//         .style("font-size", "10px")
-//         .text(value.toString());
-//     });
-
-//     // Draw angle lines
-//     const angleLines = [0, 45, 90, 135, 180, 225, 270, 315];
-//     angleLines.forEach((angle) => {
-//       const radians = (angle * Math.PI) / 180;
-//       svg
-//         .append("line")
-//         .attr("x1", 0)
-//         .attr("y1", 0)
-//         .attr("x2", radius * Math.cos(radians - Math.PI / 2))
-//         .attr("y2", radius * Math.sin(radians - Math.PI / 2))
-//         .attr("stroke", "#ddd")
-//         .attr("stroke-dasharray", "2,2");
-
-//       if (angle % 90 === 0) {
-//         svg
-//           .append("text")
-//           .attr("x", (radius + 20) * Math.cos(radians - Math.PI / 2))
-//           .attr("y", (radius + 20) * Math.sin(radians - Math.PI / 2))
-//           .attr("text-anchor", "middle")
-//           .attr("dominant-baseline", "middle")
-//           .style("font-size", "12px")
-//           .text(angle.toString());
-//       }
-//     });
-
-//     // Create area generators for variations
-//     // Red area: When abnormal ASP > normal ASP
-//     const areaHighASP = d3
-//       .areaRadial<[number, number]>()
-//       .angle((d) => angleScale(d[0]))
-//       .innerRadius((d, i) => radiusScale(normalASP[i]))
-//       .outerRadius((d, i) =>
-//         anormalASP[i] > normalASP[i]
-//           ? radiusScale(anormalASP[i])
-//           : radiusScale(normalASP[i])
-//       );
-
-//     // Green area: When normal ASP > abnormal ASP
-//     const areaLowASP = d3
-//       .areaRadial<[number, number]>()
-//       .angle((d) => angleScale(d[0]))
-//       .innerRadius((d, i) =>
-//         anormalASP[i] < normalASP[i]
-//           ? radiusScale(anormalASP[i])
-//           : radiusScale(normalASP[i])
-//       )
-//       .outerRadius((d, i) => radiusScale(normalASP[i]));
-
-//     // Blue area: When abnormal ADP > normal ADP
-//     const areaHighADP = d3
-//       .areaRadial<[number, number]>()
-//       .angle((d) => angleScale(d[0]))
-//       .innerRadius((d, i) => radiusScale(normalADP[i]))
-//       .outerRadius((d, i) =>
-//         anormalADP[i] > normalADP[i]
-//           ? radiusScale(anormalADP[i])
-//           : radiusScale(normalADP[i])
-//       );
-
-//     // Green area: When normal ADP > abnormal ADP
-//     const areaLowADP = d3
-//       .areaRadial<[number, number]>()
-//       .angle((d) => angleScale(d[0]))
-//       .innerRadius((d, i) =>
-//         anormalADP[i] < normalADP[i]
-//           ? radiusScale(anormalADP[i])
-//           : radiusScale(normalADP[i])
-//       )
-//       .outerRadius((d, i) => radiusScale(normalADP[i]));
-
-//     // Draw the areas
-//     // Green areas
-//     svg
-//       .append("path")
-//       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-//       .attr("fill", "rgba(0, 255, 0, 0.3)")
-//       .attr("d", areaLowASP);
-
-//     svg
-//       .append("path")
-//       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-//       .attr("fill", "rgba(0, 255, 0, 0.3)")
-//       .attr("d", areaLowADP);
-
-//     // Red area for high ASP
-//     svg
-//       .append("path")
-//       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-//       .attr("fill", "rgba(255, 0, 0, 0.3)")
-//       .attr("d", areaHighASP);
-
-//     // Blue area for high ADP
-//     svg
-//       .append("path")
-//       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-//       .attr("fill", "rgba(0, 0, 255, 0.3)")
-//       .attr("d", areaHighADP);
-
-//     // Draw lines
-//     svg
-//       .append("path")
-//       .datum(normalASPPoints)
-//       .attr("fill", "none")
-//       .attr("stroke", "green")
-//       .attr("stroke-width", 2)
-//       .attr("d", lineGenerator);
-
-//     svg
-//       .append("path")
-//       .datum(normalADPPoints)
-//       .attr("fill", "none")
-//       .attr("stroke", "blue")
-//       .attr("stroke-width", 2)
-//       .attr("d", lineGenerator);
-
-//     svg
-//       .append("path")
-//       .datum(anormalASPPoints)
-//       .attr("fill", "none")
-//       .attr("stroke", "red")
-//       .attr("stroke-width", 2)
-//       .attr("d", lineGenerator);
-
-//     svg
-//       .append("path")
-//       .datum(anormalADPPoints)
-//       .attr("fill", "none")
-//       .attr("stroke", "lightblue")
-//       .attr("stroke-width", 2)
-//       .attr("d", lineGenerator);
-//   }, []);
-
-//   return (
-//     <div className="flex flex-col items-center w-full max-w-3xl mx-auto p-4">
-//       <svg ref={svgRef} className="w-full h-auto" />
-//     </div>
-//   );
-// }
-
 "use client";
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
@@ -264,11 +22,11 @@ export default function BloodPressureChart() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://germany-medical.vercel.app/compare-radar/2"
+          "https://germany-medical.vercel.app/all-radars"
         );
         if (!response.ok) throw new Error("Failed to fetch data");
         const newData = await response.json();
-        const apiData = newData;
+        const apiData = newData[0];
 
         setData({
           normalASP: apiData.normalASP || [],
@@ -319,7 +77,7 @@ export default function BloodPressureChart() {
       .domain([0, 360])
       .range([0, 2 * Math.PI]);
 
-    const radiusScale = d3.scaleLinear().domain([0, 500]).range([0, radius]);
+    const radiusScale = d3.scaleLinear().domain([0, 500]).range([50, radius]);
 
     // Create line generator
     const lineGenerator = d3
@@ -348,6 +106,7 @@ export default function BloodPressureChart() {
         .append("circle")
         .attr("r", radiusScale(value))
         .attr("fill", "none")
+        .attr("font-weight", "bold")
         .attr("stroke", "#D3D3D3");
 
       svg
@@ -356,31 +115,57 @@ export default function BloodPressureChart() {
         .attr("dy", "0.35em")
         .attr("text-anchor", "middle")
         .style("font-size", "10px")
+        .attr("font-weight", "bold")
+        .text(value.toString());
+
+      svg
+        .append("text")
+        .attr("y", radiusScale(value))
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "middle")
+        .style("font-size", "10px")
+        .attr("font-weight", "bold")
         .text(value.toString());
     });
 
     // Calculate and draw angle lines based on number of points
-    [0, 90, 180, 270].forEach((angle) => {
+    const angless = [0, 90, 180, 270];
+
+    angless.forEach((angle, index) => {
       const radians = (angle * Math.PI) / 180;
+      const x1 = index % 2 === 0 ? 0 : angle === 90 ? 50 : -50;
+      const y1 = index % 2 === 0 ? (angle === 0 ? -50 : 50) : 0;
+      const x2 = radius * 0.49 * Math.cos(radians - Math.PI / 2);
+      const y2 = radius * 0.49 * Math.sin(radians - Math.PI / 2);
+
       svg
         .append("line")
-        .attr("x1", 0)
-        .attr("y1", 0)
-        .attr("x2", radius * 0.36 * Math.cos(radians - Math.PI / 2))
-        .attr("y2", radius * 0.36 * Math.sin(radians - Math.PI / 2))
+        .attr("x1", x1)
+        .attr("y1", y1)
+        .attr("x2", x2)
+        .attr("y2", y2)
         .attr("stroke", "#D3D3D3");
+    });
 
-      // Add labels for cardinal points
-      if (angle % 90 === 0) {
-        svg
-          .append("text")
-          .attr("x", (radius * 0.36 + 20) * Math.cos(radians - Math.PI / 2))
-          .attr("y", (radius * 0.36 + 20) * Math.sin(radians - Math.PI / 2))
-          .attr("text-anchor", "middle")
-          .attr("dominant-baseline", "middle")
-          .style("font-size", "12px")
-          .text(angle.toString());
-      }
+    const anglesss = [20, 110, 200, 290];
+    const labels = ["00", "06", "12", "18"];
+
+    anglesss.forEach((angle, index) => {
+      const radians = (angle * Math.PI) / 180;
+      const x = 40 * Math.cos(radians - Math.PI / 2);
+      const y = 40 * Math.sin(radians - Math.PI / 2);
+
+      svg
+        .append("text")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .attr("transform", `rotate(${angle}, ${x}, ${y})`)
+        .attr("font-size", "12px")
+        .attr("font-weight", "bold")
+        .attr("fill", "black")
+        .text(labels[index]);
     });
 
     // Create area generators
