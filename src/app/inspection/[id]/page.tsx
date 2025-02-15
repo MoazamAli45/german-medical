@@ -3,10 +3,8 @@ import Heatmap from "@/components/details/heatmap-chart";
 import InspectionCharts from "@/components/details/inspection-charts";
 // import { RightSidebar } from "@/components/right-sidebar";
 import { Sidebar } from "@/components/sidebar";
-import { differenceData } from "@/lib/sample-data";
 
 const page = ({ params }: any) => {
-  console.log("Params", params?.id);
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
@@ -21,7 +19,7 @@ const page = ({ params }: any) => {
           </div>
           {/* Bottom Chart */}
           <div className=" rounded-lg p-4 md:col-span-3 md:col-start-3  ">
-            <DifferenceChart data={differenceData} />
+            <DifferenceChart id={1} />
           </div>
         </div>
       </div>

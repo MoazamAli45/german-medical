@@ -1,32 +1,41 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-interface TimeSeriesData {
-  timestamp: number;
-  abnormalInspection5ASP: number;
-  abnormalInspection4ASP: number;
-  abnormalInspection5ADP: number;
-  abnormalInspection4ADP: number;
-  referenceVisit5ASP: number;
-  referenceVisit4ASP: number;
-  referenceVisit5ADP: number;
-  referenceVisit4ADP: number;
-}
-
 interface DifferenceChartProps {
-  data: TimeSeriesData[];
+  id: number;
   width?: number;
   height?: number;
 }
 
+interface ApiResponse {
+  data: number[][];
+}
+
 export function DifferenceChart({
-  data,
+  id,
   width = 800,
   height = 300,
 }: DifferenceChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const [data, setData] = useState<number[][]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://germany-medical.vercel.app/line-chart/${id}`
+        );
+        const result: ApiResponse = await response.json();
+        setData(result.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   useEffect(() => {
     if (!svgRef.current || !data.length) return;
@@ -45,7 +54,10 @@ export function DifferenceChart({
       .domain([0, data.length - 1])
       .range([0, innerWidth]);
 
-    const y = d3.scaleLinear().domain([-1, 1]).range([innerHeight, 0]);
+    const y = d3
+      .scaleLinear()
+      .domain([0, d3.max(data.flat()) as number])
+      .range([innerHeight, 0]);
 
     const g = svg
       .append("g")
@@ -69,33 +81,38 @@ export function DifferenceChart({
       currentX += section.width;
     });
 
-    // Create line generators
-    const createLine = (key: keyof TimeSeriesData) => {
+    // Create line generator
+    const createLine = (index: number) => {
       return d3
-        .line<TimeSeriesData>()
-        .x((d) => x(data.indexOf(d)))
-        .y((d) => y(d[key]));
+        .line<number[]>()
+        .x((_, i) => x(i))
+        .y((d) => y(d[index]));
     };
 
-    // Draw lines
-    const lines = [
-      { key: "abnormalInspection5ASP", color: "#f97316", dash: "none" },
-      { key: "abnormalInspection4ASP", color: "#f97316", dash: "4,4" },
-      { key: "abnormalInspection5ADP", color: "#3b82f6", dash: "none" },
-      { key: "abnormalInspection4ADP", color: "#3b82f6", dash: "4,4" },
-      { key: "referenceVisit5ASP", color: "#22c55e", dash: "none" },
-      { key: "referenceVisit4ASP", color: "#22c55e", dash: "4,4" },
-    ];
+    // Generate colors for lines
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
-    lines.forEach((line) => {
+    // Draw lines
+    const numColumns = data[0].length;
+    for (let i = 0; i < numColumns; i++) {
+      const color = colorScale(i.toString());
+      const dash = i % 2 === 0 ? "none" : "4,4";
+
       g.append("path")
         .datum(data)
         .attr("fill", "none")
-        .attr("stroke", line.color)
+        .attr("stroke", color)
         .attr("stroke-width", 1.5)
-        .attr("stroke-dasharray", line.dash)
-        .attr("d", createLine(line.key as keyof TimeSeriesData));
-    });
+        .attr("stroke-dasharray", dash)
+        .attr("d", createLine(i));
+    }
+
+    // Add axes
+    const xAxis = d3.axisBottom(x);
+    const yAxis = d3.axisLeft(y);
+
+    g.append("g").attr("transform", `translate(0,${innerHeight})`).call(xAxis);
+    g.append("g").call(yAxis);
 
     // Add title
     svg
@@ -104,36 +121,33 @@ export function DifferenceChart({
       .attr("y", 20)
       .attr("text-anchor", "middle")
       .attr("class", "text-base font-semibold")
-      .text("Difference Inspection 4 and 5");
+      .text("Difference Inspection Chart");
 
     // Add legend
     const legend = svg
       .append("g")
       .attr("transform", `translate(${margin.left},${height - 20})`);
 
-    const legendItems = [
-      { label: "Anormal Inspection 5 ASP", color: "#f97316", dash: "none" },
-      { label: "Anormal Inspection 4 ASP", color: "#f97316", dash: "4,4" },
-      { label: "Reference Visit 5 ASP", color: "#22c55e", dash: "none" },
-      { label: "Reference Visit 4 ASP", color: "#22c55e", dash: "4,4" },
-    ];
+    for (let i = 0; i < numColumns; i++) {
+      const color = colorScale(i.toString());
+      const dash = i % 2 === 0 ? "none" : "4,4";
+      const label = `Series ${i + 1}`;
 
-    legendItems.forEach((item, i) => {
-      const g = legend.append("g").attr("transform", `translate(${i * 200},0)`);
+      const g = legend.append("g").attr("transform", `translate(${i * 100},0)`);
 
       g.append("line")
         .attr("x1", 0)
         .attr("x2", 20)
-        .attr("stroke", item.color)
+        .attr("stroke", color)
         .attr("stroke-width", 1.5)
-        .attr("stroke-dasharray", item.dash);
+        .attr("stroke-dasharray", dash);
 
       g.append("text")
         .attr("x", 25)
         .attr("y", 4)
-        .text(item.label)
+        .text(label)
         .attr("font-size", "12px");
-    });
+    }
   }, [data, width, height]);
 
   return (
