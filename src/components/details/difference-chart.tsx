@@ -59,7 +59,7 @@ export function DifferenceChart({
       .domain([0, d3.max(data.flat()) as number])
       .range([innerHeight, 0]);
 
-    const g = svg
+    const g = svg // tslint:disable-next-
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
