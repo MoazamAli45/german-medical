@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { InfoIcon } from "lucide-react";
+import Loader from "../loader";
 
 const xLabels = [
   "ASP 24h",
@@ -131,11 +132,6 @@ export default function Heatmap() {
     const legendWidth = 15;
     const legendHeight = height - margin.top - margin.bottom;
 
-    const legendScale = d3
-      .scaleLinear()
-      .domain([maxValue, minValue])
-      .range([0, legendHeight]);
-
     const legend = svg
       .append("g")
       .attr(
@@ -215,8 +211,8 @@ export default function Heatmap() {
 
   if (isLoading) {
     return (
-      <div className="p-4">
-        <div className="text-center">Loading...</div>
+      <div className="p-4 flex items-center w-full h-full justify-center">
+        <Loader />
       </div>
     );
   }

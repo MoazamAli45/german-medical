@@ -2,18 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { D3InspectionGraph } from "./inspection-graph";
+import Loader from "../loader";
 
 interface InspectionData {
-  data: {
-    hour: number;
-    asp: number;
-    adp: number;
-    map: number;
-  }[];
+  hour: number;
+  asp: number;
+  adp: number;
+  map: number;
 }
 
 export default function InspectionCharts({ id }: { id: string }) {
-  const [data, setData] = useState<InspectionData["data"]>([]);
+  const [data1, setData1] = useState<InspectionData[]>([]);
+  const [data2, setData2] = useState<InspectionData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,14 +27,24 @@ export default function InspectionCharts({ id }: { id: string }) {
           throw new Error("Failed to fetch data");
         }
         const inspectionData = await response.json();
-        // Use the first inspection's data
-        setData(
-          inspectionData[0].data.map((item: any) => ({
-            ...item,
-            // Normalize hours to 0-24 range
-            hour: item.hour % 24,
-          }))
-        );
+
+        if (inspectionData.length > 0) {
+          setData1(
+            inspectionData[0].data.map((item: any) => ({
+              ...item,
+              hour: item.hour % 24, // Normalize hours to 0-24 range
+            }))
+          );
+
+          if (inspectionData.length > 1) {
+            setData2(
+              inspectionData[1].data.map((item: any) => ({
+                ...item,
+                hour: item.hour % 24,
+              }))
+            );
+          }
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -43,12 +53,12 @@ export default function InspectionCharts({ id }: { id: string }) {
     }
 
     fetchData();
-  }, []);
+  }, [id]);
 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-[200px]">
-        Loading...
+        <Loader />
       </div>
     );
   }
@@ -58,24 +68,35 @@ export default function InspectionCharts({ id }: { id: string }) {
   }
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h2 className="text-lg font-semibold mb-4">
-        Blood Pressure Inspection Graph
-      </h2>
-      <D3InspectionGraph data={data} />
-      <div className="mt-4 flex gap-4 justify-center text-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          <span>ASP</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-          <span>ADP</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
-          <span>MAP</span>
-        </div>
+    <div className="p-2 md:p-4">
+      <div className="flex gap-1 items-center  sm:flex-row flex-col">
+        {/* First Dataset */}
+        {data1.length > 0 ? (
+          <div className="mb-6">
+            <h3 className="text-[18px] text-center font-bold  ">
+              Inspection {id}
+            </h3>
+            <D3InspectionGraph data={data1} />
+          </div>
+        ) : (
+          <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-center mb-6">
+            <p>No data found for Inspection</p>
+          </div>
+        )}
+
+        {/* Second Dataset */}
+        {data2.length > 0 ? (
+          <div>
+            <h3 className="text-[18px] font-bold">
+              Difference to Inspection {+id - 1}
+            </h3>
+            <D3InspectionGraph data={data2} />
+          </div>
+        ) : (
+          <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-center">
+            <p>No data found for Inspection</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { DifferenceChart } from "@/components/details/difference-chart";
 import Heatmap from "@/components/details/heatmap-chart";
 import InspectionCharts from "@/components/details/inspection-charts";
-import { RightSidebar } from "@/components/right-sidebar";
+// import { RightSidebar } from "@/components/right-sidebar";
 import { Sidebar } from "@/components/sidebar";
 import { differenceData } from "@/lib/sample-data";
 
