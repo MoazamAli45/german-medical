@@ -13,9 +13,7 @@ interface BloodPressureChartProps {
   number: number;
 }
 
-export default function BloodPressureChart({
-  number,
-}: BloodPressureChartProps) {
+export default function ComparisonRadar({ number }: BloodPressureChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [data, setData] = useState<BloodPressureData>({
     normalASP: Array(10).fill(120),
@@ -28,11 +26,10 @@ export default function BloodPressureChart({
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://germany-medical.vercel.app/all-radars"
+          `https://germany-medical.vercel.app/compare-radar/${number}`
         );
         if (!response.ok) throw new Error("Failed to fetch data");
-        const newData = await response.json();
-        const apiData = newData[number - 1];
+        const apiData = await response.json();
 
         setData({
           normalASP: apiData.normalASP || [],
