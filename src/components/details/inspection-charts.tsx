@@ -17,8 +17,8 @@ interface InspectionData {
 }
 
 export default function InspectionCharts({ id }: { id: string }) {
-  const [data1, setData1] = useState<InspectionData | null>(null);
-  const [data2, setData2] = useState<InspectionData | null>(null);
+  const [data1, setData1] = useState<any>();
+  const [data2, setData2] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -92,9 +92,13 @@ export default function InspectionCharts({ id }: { id: string }) {
           <D3InspectionGraph data={data1.data} />
         </div>
       )}
-
+      {!data1 && (
+        <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-center mb-6 h-[100px]">
+          <p>No data found for Inspection</p>
+        </div>
+      )}
       {/* Difference Chart */}
-      {data1 && data2 && (
+      {data2 && (
         <div className="flex-1 bg-white rounded-lg p-4">
           <div className="text-center mb-4">
             <h3 className="text-[24px] font-bold mb-1">
@@ -124,6 +128,11 @@ export default function InspectionCharts({ id }: { id: string }) {
           </div>
 
           <D3InspectionGraph data={data2.data} />
+        </div>
+      )}{" "}
+      {!data2 && (
+        <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-center mb-6 h-[100px]  ">
+          <p>No data found for this Inspection</p>
         </div>
       )}
     </div>
