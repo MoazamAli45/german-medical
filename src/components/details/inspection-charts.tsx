@@ -5,15 +5,20 @@ import { D3InspectionGraph } from "./inspection-graph";
 import Loader from "../loader";
 
 interface InspectionData {
-  hour: number;
-  asp: number;
-  adp: number;
-  map: number;
+  age: string;
+  height: string;
+  date: string;
+  data: Array<{
+    hour: number;
+    asp: number;
+    adp: number;
+    map: number;
+  }>;
 }
 
 export default function InspectionCharts({ id }: { id: string }) {
-  const [data1, setData1] = useState<InspectionData[]>([]);
-  const [data2, setData2] = useState<InspectionData[]>([]);
+  const [data1, setData1] = useState<InspectionData | null>(null);
+  const [data2, setData2] = useState<InspectionData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,20 +34,9 @@ export default function InspectionCharts({ id }: { id: string }) {
         const inspectionData = await response.json();
 
         if (inspectionData.length > 0) {
-          setData1(
-            inspectionData[0].data.map((item: any) => ({
-              ...item,
-              hour: item.hour % 24, // Normalize hours to 0-24 range
-            }))
-          );
-
+          setData1(inspectionData[0]);
           if (inspectionData.length > 1) {
-            setData2(
-              inspectionData[1].data.map((item: any) => ({
-                ...item,
-                hour: item.hour % 24,
-              }))
-            );
+            setData2(inspectionData[1]);
           }
         }
       } catch (err) {
@@ -68,36 +62,74 @@ export default function InspectionCharts({ id }: { id: string }) {
   }
 
   return (
-    <div className="p-2 md:p-4">
-      <div className="flex gap-1 items-center  sm:flex-row flex-col">
-        {/* First Dataset */}
-        {data1.length > 0 ? (
-          <div className="mb-6">
-            <h3 className="text-[18px] text-center font-bold  ">
-              Inspection {id}
-            </h3>
-            <D3InspectionGraph data={data1} />
+    <div className="flex flex-col sm:flex-row gap-6 p-4">
+      {/* First Inspection */}
+      {data1 && (
+        <div className="flex-1 bg-white rounded-lg  p-4">
+          <div className="text-center mb-4">
+            <h3 className="text-[24px] font-bold mb-1">Inspection {id}</h3>
+            <p className="text-[19px] text-black mb-1">{data1.date}</p>
+            <p className="text-[19px] text-black">
+              {data1.age}, {data1.height}
+            </p>
           </div>
-        ) : (
-          <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-center mb-6">
-            <p>No data found for Inspection</p>
-          </div>
-        )}
 
-        {/* Second Dataset */}
-        {data2.length > 0 ? (
-          <div>
-            <h3 className="text-[18px] font-bold">
+          <div className="flex flex-col gap-1 text-sm mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#FF4D4D]"></div>
+              <span className="text-[14px]">ASP {">"} Healthy ASP</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#ADD8E6]"></div>
+              <span className="text-[14px]">DBP {">"} Healthy ADP</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#90EE90]"></div>
+              <span className="text-[14px]">Healthy ASP/ADP {">"} ASP/SDP</span>
+            </div>
+          </div>
+
+          <D3InspectionGraph data={data1.data} />
+        </div>
+      )}
+
+      {/* Difference Chart */}
+      {data1 && data2 && (
+        <div className="flex-1 bg-white rounded-lg p-4">
+          <div className="text-center mb-4">
+            <h3 className="text-[24px] font-bold mb-1">
               Difference to Inspection {+id - 1}
             </h3>
-            <D3InspectionGraph data={data2} />
+            <p className="text-[19px] text-black">
+              {data2.date} | {data1.date}
+            </p>
+            <p className="text-[19px] text-black">
+              {data1.age} | {data1.height} | {data2.height}
+            </p>
           </div>
-        ) : (
-          <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-center">
-            <p>No data found for Inspection</p>
+
+          <div className="flex flex-col gap-1 justify-center items-center text-sm mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#FF4D4D]"></div>
+              <span className="text-[14px]">
+                ASP Visit {id} {">"} Visit {+id - 1} ASP/ADP
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#ADD8E6]"></div>
+              <span className="text-[14px]">
+                ADP Visit {+id - 1} {">"} Visit {id} ASP/ADP
+              </span>
+            </div>
           </div>
-        )}
-      </div>
+
+          <D3InspectionGraph
+            data={data1.data}
+            isDifference={true}
+            comparisonData={data2.data}
+          />
+        </div>
+      )}
     </div>
   );
 }
