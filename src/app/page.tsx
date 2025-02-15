@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
 import Link from "next/link";
+import BloodPressureChart from "@/components/radar-chart";
 
 export default function Home() {
   const [inspections, setInspections] = useState<any[]>([]);
@@ -80,7 +81,7 @@ export default function Home() {
                           <div className="text-[16px] sm:text-[19px] text-black mb-4 text-center">
                             {inspection.age}, {inspection.height}
                           </div>
-                          <D3InspectionGraph data={inspection.data} />
+                          <BloodPressureChart number={inspection.number} />
                         </div>
                         {
                           <Link
