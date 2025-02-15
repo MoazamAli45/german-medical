@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Loader from "../loader";
 import { D3InspectionGraph } from "../d3-inspection-graph";
+import BloodPressureChart from "../radar-chart";
+import ComparisonRadar from "./comparison-radar";
 
 interface InspectionData {
   age: string;
@@ -89,7 +91,7 @@ export default function InspectionCharts({ id }: { id: string }) {
             </div>
           </div>
 
-          <D3InspectionGraph data={data1.data} />
+          <BloodPressureChart number={Number(id)} />
         </div>
       )}
       {!data1 && (
@@ -127,7 +129,7 @@ export default function InspectionCharts({ id }: { id: string }) {
             </div>
           </div>
 
-          <D3InspectionGraph data={data2.data} />
+          <ComparisonRadar number={Number(id)} />
         </div>
       )}{" "}
       {!data2 && (
