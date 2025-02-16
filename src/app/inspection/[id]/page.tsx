@@ -12,7 +12,7 @@ const page = ({ params }: any) => {
       <div className="pl-12 sm:pl-16 lg:pr-[340px] transition-all duration-300 lg:col-span-9 space-y-6">
         <div className="flex flex-col gap-1 md:grid  md:grid-cols-5">
           <div className=" p-2 md:col-span-2 ">
-            <Heatmap />
+            <Heatmap id={params?.id} />
           </div>
           <div className=" md:col-span-3">
             <InspectionCharts id={params?.id} />

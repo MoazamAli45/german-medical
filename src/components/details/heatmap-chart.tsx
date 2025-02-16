@@ -15,7 +15,7 @@ const xLabels = [
 ];
 const yLabels = ["5", "4", "3", "2", "1"];
 
-export default function Heatmap() {
+export default function Heatmap({ id = 2 }: { id: number }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [data, setData] = useState<number[][]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +31,7 @@ export default function Heatmap() {
           throw new Error("Failed to fetch data");
         }
         const jsonData = await response.json();
-        setData(jsonData);
+        setData(jsonData[id - 1]);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch data");
       } finally {
@@ -87,8 +87,7 @@ export default function Heatmap() {
           .attr("fill", colorScale(value))
           .attr("stroke", "black")
           .attr("stroke-width", 0)
-          .append("title")
-          .text(`Value: ${value.toFixed(2)}`);
+          .append("title");
       });
     });
 
