@@ -7,6 +7,12 @@ import Sun from "@/icons/icon-1.svg";
 import Moon from "@/icons/icon-2.svg";
 import Star from "@/icons/icon-3.svg";
 import Loader from "../loader";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface InspectionData {
   number: number;
@@ -144,7 +150,7 @@ export function RightSidebar({ id }: { id: string }) {
       </button>
       {isLoading ? (
         <div
-          className={`fixed right-0 top-0 h-full w-[300px] sm:w-[360px] bg-white p-4 overflow-y-auto border-gray-200 scrollbar-hide transition-transform duration-300 ease-in-out ${
+          className={`absolute right-0 top-0 h-full w-[300px] sm:w-[360px] bg-white p-4 overflow-y-auto border-gray-200 scrollbar-hide transition-transform duration-300 ease-in-out ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } lg:translate-x-0`}
         >
@@ -152,7 +158,7 @@ export function RightSidebar({ id }: { id: string }) {
         </div>
       ) : (
         <div
-          className={`fixed right-0 top-0 h-full w-[300px] sm:w-[360px] bg-white p-4 overflow-y-auto border-gray-200 scrollbar-hide transition-transform duration-300 ease-in-out ${
+          className={`fixed lg:absolute right-0 top-0 h-full w-[300px] sm:w-[360px] bg-white p-4  border-gray-200 overflow-auto lg:overflow-visible scrollbar-hide transition-transform duration-300 ease-in-out ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } lg:translate-x-0`}
         >
@@ -167,14 +173,14 @@ export function RightSidebar({ id }: { id: string }) {
               {previousInspection ? (
                 previousInspection.age
               ) : (
-                <span className="text-red-500">Prev not present</span>
+                <span className="text-red-500">NaN</span>
               )}
               | {currentInspection.height}
               {"->"}{" "}
               {previousInspection ? (
                 previousInspection?.height
               ) : (
-                <span className="text-red-500">Prev not present</span>
+                <span className="text-red-500">NaN</span>
               )}
             </p>
           </div>
@@ -270,7 +276,7 @@ export function RightSidebar({ id }: { id: string }) {
                             reading.prevValue.toFixed(1)
                           ) : (
                             <span className="text-red-500 text-[14px]">
-                              Not present
+                              NaN
                             </span>
                           )}
                         </span>
@@ -292,7 +298,7 @@ export function RightSidebar({ id }: { id: string }) {
                             reading.prevAdp.toFixed(1)
                           ) : (
                             <span className="text-red-500 text-[14px]">
-                              Not present
+                              NaN
                             </span>
                           )}
                         </span>
@@ -493,7 +499,18 @@ export function RightSidebar({ id }: { id: string }) {
                       key={medName}
                       className="grid grid-cols-3 gap-4 py-2  text-center"
                     >
-                      <span className="font-bold text-[14px]">{medName}</span>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="font-bold text-[14px] cursor-pointer">
+                              {medName.length > 15
+                                ? `${medName.slice(0, 10)}...`
+                                : medName}
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>{medName}</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                       <span className="text-[14px] font-semibold">
                         {currentMed?.dose || "NaN"}
                       </span>

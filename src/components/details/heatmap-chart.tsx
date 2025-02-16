@@ -88,6 +88,7 @@ export default function Heatmap({ id = 2 }: { id: number }) {
           .attr("stroke", "black")
           .attr("stroke-width", 0)
           .append("title");
+
       });
     });
 
