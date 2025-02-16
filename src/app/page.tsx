@@ -56,48 +56,51 @@ export default function Home() {
                       <span className="text-[18px] ">♂</span>
                     </span>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 py-2 max-w-5xl">
-                    {inspections.map((inspection) => (
-                      <div
-                        key={inspection.number}
-                        className=" flex flex-col gap-2 group"
-                      >
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 py-2 max-w-5xl ">
+                    {inspections
+                      .slice()
+                      .reverse()
+                      .map((inspection) => (
                         <div
-                          className={`bg-gray-50 rounded-lg p-4 relative transition-all duration-300  border-[1px] border-solid cursor-pointer ${
-                            activeInspection.number === inspection.number
-                              ? "border-[#88B1EF] bg-[rgb(168,230,243,.19)] shadow-md"
-                              : "border-[rgb(168,230,243,.19)] hover:border-[#88B1EF] hover:bg-[rgb(168,230,243,.19)] hover:shadow-md"
-                          }`}
-                          onClick={() => setActiveInspection(inspection)}
+                          key={inspection.number}
+                          className=" flex flex-col gap-2 group"
                         >
-                          <div className="flex flex-col items-center ">
-                            <h2 className="font-bold text-[18px] sm:text-[24px]">
-                              Inspection {inspection.number}
-                            </h2>
-                            <span className="text-[16px] sm:text-[19px] text-black">
-                              {inspection.date}
-                            </span>
-                          </div>
-                          <div className="text-[16px] sm:text-[19px] text-black mb-4 text-center">
-                            {inspection.age}, {inspection.height}
-                          </div>
-                          <BloodPressureChart number={inspection.number} />
-                        </div>
-                        {
-                          <Link
-                            href={`/inspection/${inspection.number}`}
-                            className={cn(
-                              "border-color bg-[rgb(168,230,243,.19)] px-6 py-2 text-center rounded-lg font-normal text-[16px] sm:text-[19px]",
+                          <div
+                            className={`bg-gray-50 rounded-lg p-4 relative transition-all duration-300  border-[1px] border-solid cursor-pointer ${
                               activeInspection.number === inspection.number
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
+                                ? "border-[#88B1EF] bg-[rgb(168,230,243,.19)] shadow-md"
+                                : "border-[rgb(168,230,243,.19)] hover:border-[#88B1EF] hover:bg-[rgb(168,230,243,.19)] hover:shadow-md"
+                            }`}
+                            onClick={() => setActiveInspection(inspection)}
                           >
-                            Show Details
-                          </Link>
-                        }
-                      </div>
-                    ))}
+                            <div className="flex flex-col items-center ">
+                              <h2 className="font-bold text-[18px] sm:text-[24px]">
+                                Inspection {inspection.number}
+                              </h2>
+                              <span className="text-[16px] sm:text-[19px] text-black">
+                                {inspection.date}
+                              </span>
+                            </div>
+                            <div className="text-[16px] sm:text-[19px] text-black mb-4 text-center">
+                              {inspection.age}, {inspection.height}
+                            </div>
+                            <BloodPressureChart number={inspection.number} />
+                          </div>
+                          {
+                            <Link
+                              href={`/inspection/${inspection.number}`}
+                              className={cn(
+                                "border-color bg-[rgb(168,230,243,.19)] px-6 py-2 text-center rounded-lg font-normal text-[16px] sm:text-[19px]",
+                                activeInspection.number === inspection.number
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            >
+                              Show Details
+                            </Link>
+                          }
+                        </div>
+                      ))}
                   </div>
                 </>
               )}
