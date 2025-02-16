@@ -191,13 +191,12 @@ export function RightSidebar({ id }: { id: string }) {
             </h2>
             <div className="flex items-center justify-between px-2">
               <h4 className="text-[16px] sm:text-[19px] font-bold">
+                Inspection {+id - 1 === 0 ? "NaN" : +id - 1}
+              </h4>
+
+              <h4 className="text-[16px] sm:text-[19px] font-bold">
                 Inspection {id}
               </h4>
-              {
-                <h4 className="text-[16px] sm:text-[19px] font-bold">
-                  Inspection {+id - 1 === 0 ? "NaN" : +id - 1}
-                </h4>
-              }
             </div>
             <div className="space-y-3 pt-2  pb-6">
               {[
@@ -238,7 +237,13 @@ export function RightSidebar({ id }: { id: string }) {
                       <div className="flex flex-col items-center justify-center p-1 w-[100px]  sm:w-[110px]  rounded-[25px]  border-[1px] border-solid border-gray">
                         <div className="flex gap-1 items-center">
                           <span className="text-[16px] sm:text-[19px] font-bold">
-                            {reading.value.toFixed(1)}
+                            {reading.prevValue !== undefined ? (
+                              reading.prevValue.toFixed(1)
+                            ) : (
+                              <span className="text-red-500 text-[14px]">
+                                NaN
+                              </span>
+                            )}
                           </span>
                           <span className="text-[14px]">mmHg</span>
                         </div>
@@ -249,7 +254,13 @@ export function RightSidebar({ id }: { id: string }) {
                       <div className="flex flex-col items-center justify-center p-1 w-[100px]  sm:w-[110px]  rounded-[25px]  border-[1px] border-solid border-gray">
                         <div className="flex gap-1 items-center">
                           <span className="text-[16px] sm:text-[19px] font-bold">
-                            {reading.adp.toFixed(1)}
+                            {reading.prevAdp !== undefined ? (
+                              reading.prevAdp.toFixed(1)
+                            ) : (
+                              <span className="text-red-500 text-[14px]">
+                                NaN
+                              </span>
+                            )}
                           </span>
                           <span className="text-[14px]">mmHg</span>
                         </div>
@@ -272,8 +283,8 @@ export function RightSidebar({ id }: { id: string }) {
                     <div className="flex flex-col items-center justify-center shrink-0 p-1 rounded-[25px] w-[100px] sm:w-[110px] border-[1px] border-solid border-gray">
                       <div className="flex gap-1 items-center">
                         <span className="text-[16px] sm:text-[19px] font-bold">
-                          {reading.prevValue !== undefined ? (
-                            reading.prevValue.toFixed(1)
+                          {reading?.value !== undefined ? (
+                            reading.value.toFixed(1)
                           ) : (
                             <span className="text-red-500 text-[14px]">
                               NaN
@@ -294,8 +305,8 @@ export function RightSidebar({ id }: { id: string }) {
                     <div className="flex flex-col items-center justify-center shrink-0 p-1 rounded-[25px] w-[100px] sm:w-[110px] border-[1px] border-solid border-gray">
                       <div className="flex gap-1 items-center">
                         <span className="text-[16px] sm:text-[19px] font-bold">
-                          {reading.prevAdp !== undefined ? (
-                            reading.prevAdp.toFixed(1)
+                          {reading?.adp !== undefined ? (
+                            reading.adp.toFixed(1)
                           ) : (
                             <span className="text-red-500 text-[14px]">
                               NaN
@@ -322,13 +333,12 @@ export function RightSidebar({ id }: { id: string }) {
             </h2>
             <div className="flex items-center justify-between px-[6px] pb-4">
               <h4 className="text-[16px] sm:text-[19px] font-bold">
+                Inspection {+id - 1 === 0 ? "NaN" : +id - 1}
+              </h4>
+
+              <h4 className="text-[16px] sm:text-[19px] font-bold">
                 Inspection {id}
               </h4>
-              {
-                <h4 className="text-[16px] sm:text-[19px] font-bold">
-                  Inspection {+id - 1 === 0 ? "NaN" : +id - 1}
-                </h4>
-              }
             </div>
 
             <div className="space-y-6">
@@ -362,48 +372,7 @@ export function RightSidebar({ id }: { id: string }) {
                   key={index}
                   className="grid grid-cols-[1fr_1fr_1fr] gap-2  items-center"
                 >
-                  {/* ASP Bar */}
-                  <div className="flex items-center  gap-1 shrink-0">
-                    <div className="flex flex-col gap-1 items-center shrink-0">
-                      <span className="text-[12px]  font-bold">ASP</span>
-                      <span className="text-[12px] font-bold">ADP</span>
-                    </div>
-                    <div className="flex flex-col flex-1 basis-[80%] gap-1 items-center shrink-0">
-                      <div className="h-4 w-full bg-[#AEADAD] overflow-hidden">
-                        <div
-                          className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
-                          style={{ width: `${Math.abs(item.asp).toFixed(1)}%` }}
-                        >
-                          <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[12px] sm:text-[14px]">
-                            {Math.abs(item.asp).toFixed(1)}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="h-4 w-full bg-[#AEADAD] overflow-hidden">
-                        <div
-                          className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
-                          style={{ width: `${Math.abs(item.adp).toFixed(1)}%` }}
-                        >
-                          <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[12px] sm:text-[14px]">
-                            {Math.abs(item.adp).toFixed(1)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Icon */}
-                  <div className="flex items-center justify-center bg-gray-100 rounded-md">
-                    <Image
-                      src={item.icon || "/placeholder.svg"}
-                      alt={item.iconAlt}
-                      width={item.iconAlt === "Sun" ? 57 : 20}
-                      height={20}
-                      className="h-[18px] w-auto sm:h-[20px] sm:w-auto"
-                    />
-                  </div>
-
-                  {/* ADP Bar */}
+                  {/* Previous Bar */}
                   <div className="flex items-center  gap-1 shrink-0">
                     <div className="flex flex-col gap-1 items-center shrink-0">
                       <span className="text-[12px]  font-bold">ASP</span>
@@ -456,6 +425,47 @@ export function RightSidebar({ id }: { id: string }) {
                       </div>
                     </div>
                   </div>
+
+                  {/* Icon */}
+                  <div className="flex items-center justify-center bg-gray-100 rounded-md">
+                    <Image
+                      src={item.icon || "/placeholder.svg"}
+                      alt={item.iconAlt}
+                      width={item.iconAlt === "Sun" ? 57 : 20}
+                      height={20}
+                      className="h-[18px] w-auto sm:h-[20px] sm:w-auto"
+                    />
+                  </div>
+                  {/* Current Bar */}
+                  <div className="flex items-center  gap-1 shrink-0">
+                    <div className="flex flex-col gap-1 items-center shrink-0">
+                      <span className="text-[12px]  font-bold">ASP</span>
+                      <span className="text-[12px] font-bold">ADP</span>
+                    </div>
+                    <div className="flex flex-col flex-1 basis-[80%] gap-1 items-center shrink-0">
+                      <div className="h-4 w-full bg-[#AEADAD] overflow-hidden">
+                        <div
+                          className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
+                          style={{ width: `${Math.abs(item.asp).toFixed(1)}%` }}
+                        >
+                          <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[12px] sm:text-[14px]">
+                            {Math.abs(item.asp).toFixed(1)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="h-4 w-full bg-[#AEADAD] overflow-hidden">
+                        <div
+                          className="h-full bg-[#B0D5BC] transition-all duration-500 relative"
+                          style={{ width: `${Math.abs(item.adp).toFixed(1)}%` }}
+                        >
+                          <span className="absolute left-1 top-1/2 -translate-y-1/2 font-bold text-black text-[12px] sm:text-[14px]">
+                            {Math.abs(item.adp).toFixed(1)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -466,10 +476,10 @@ export function RightSidebar({ id }: { id: string }) {
 
             <div className="grid grid-cols-3 gap-4 text-center font-bold">
               <span className="text-lg"></span>
-              <span className="text-[16px] sm:text-[19px]">Insp {id}</span>
               <span className="text-[16px] sm:text-[19px]">
                 Insp {+id - 1 === 0 ? "NaN" : +id - 1}
               </span>
+              <span className="text-[16px] sm:text-[19px]">Insp {id}</span>
             </div>
 
             <div className="mt-2">
@@ -511,11 +521,12 @@ export function RightSidebar({ id }: { id: string }) {
                           <TooltipContent>{medName}</TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
-                      <span className="text-[14px] font-semibold">
-                        {currentMed?.dose || "NaN"}
-                      </span>
+
                       <span className="text-[14px] font-semibold">
                         {previousMed?.dose || "NaN"}
+                      </span>
+                      <span className="text-[14px] font-semibold">
+                        {currentMed?.dose || "NaN"}
                       </span>
                     </div>
                   );
