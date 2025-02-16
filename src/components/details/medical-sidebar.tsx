@@ -173,14 +173,14 @@ export function RightSidebar({ id }: { id: string }) {
               {previousInspection ? (
                 previousInspection.age
               ) : (
-                <span className="text-red-500">Prev not present</span>
+                <span className="text-red-500">NaN</span>
               )}
               | {currentInspection.height}
               {"->"}{" "}
               {previousInspection ? (
                 previousInspection?.height
               ) : (
-                <span className="text-red-500">Prev not present</span>
+                <span className="text-red-500">NaN</span>
               )}
             </p>
           </div>
@@ -276,7 +276,7 @@ export function RightSidebar({ id }: { id: string }) {
                             reading.prevValue.toFixed(1)
                           ) : (
                             <span className="text-red-500 text-[14px]">
-                              Not present
+                              NaN
                             </span>
                           )}
                         </span>
@@ -298,7 +298,7 @@ export function RightSidebar({ id }: { id: string }) {
                             reading.prevAdp.toFixed(1)
                           ) : (
                             <span className="text-red-500 text-[14px]">
-                              Not present
+                              NaN
                             </span>
                           )}
                         </span>
