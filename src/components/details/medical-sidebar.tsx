@@ -158,7 +158,7 @@ export function RightSidebar({ id }: { id: string }) {
         </div>
       ) : (
         <div
-          className={`fixed lg:absolute right-0 top-0 h-full w-[300px] sm:w-[360px] bg-white p-4 overflow-y-auto border-gray-200 scrollbar-hide transition-transform duration-300 ease-in-out ${
+          className={`fixed lg:absolute right-0 top-0 h-full w-[300px] sm:w-[360px] bg-white p-4  border-gray-200 overflow-auto lg:overflow-visible scrollbar-hide transition-transform duration-300 ease-in-out ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } lg:translate-x-0`}
         >
