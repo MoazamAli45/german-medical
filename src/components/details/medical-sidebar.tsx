@@ -7,6 +7,12 @@ import Sun from "@/icons/icon-1.svg";
 import Moon from "@/icons/icon-2.svg";
 import Star from "@/icons/icon-3.svg";
 import Loader from "../loader";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface InspectionData {
   number: number;
@@ -493,7 +499,18 @@ export function RightSidebar({ id }: { id: string }) {
                       key={medName}
                       className="grid grid-cols-3 gap-4 py-2  text-center"
                     >
-                      <span className="font-bold text-[14px]">{medName}</span>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="font-bold text-[14px] cursor-pointer">
+                              {medName.length > 15
+                                ? `${medName.slice(0, 10)}...`
+                                : medName}
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>{medName}</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                       <span className="text-[14px] font-semibold">
                         {currentMed?.dose || "NaN"}
                       </span>
