@@ -216,25 +216,25 @@ export default function ComparisonRadar({ number }: BloodPressureChartProps) {
     svg
       .append("path")
       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-      .attr("fill", "rgba(0, 255, 0, 0.3)")
+      .attr("fill", "rgb(255, 138, 138)")
       .attr("d", areaLowASP);
 
     svg
       .append("path")
       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-      .attr("fill", "rgba(0, 255, 0, 0.3)")
+      .attr("fill", "rgb(204,204,255)")
       .attr("d", areaLowADP);
 
     svg
       .append("path")
       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-      .attr("fill", "rgba(255, 0, 0, 0.3)")
+      .attr("fill", "rgb(255, 77, 77)")
       .attr("d", areaHighASP);
 
     svg
       .append("path")
       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-      .attr("fill", "rgba(0, 0, 255, 0.3)")
+      .attr("fill", "rgb(67, 67, 255)")
       .attr("d", areaHighADP);
 
     // Draw lines

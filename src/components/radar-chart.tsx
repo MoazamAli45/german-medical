@@ -219,25 +219,25 @@ export default function BloodPressureChart({
     svg
       .append("path")
       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-      .attr("fill", "rgba(0, 255, 0, 0.3)")
+      .attr("fill", "rgb(144, 238, 144)")
       .attr("d", areaLowASP);
 
     svg
       .append("path")
       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-      .attr("fill", "rgba(0, 255, 0, 0.3)")
+      .attr("fill", "rgb(144, 238, 144)")
       .attr("d", areaLowADP);
 
     svg
       .append("path")
       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-      .attr("fill", "rgba(255, 0, 0, 0.3)")
+      .attr("fill", "rgb(239,125,126)")
       .attr("d", areaHighASP);
 
     svg
       .append("path")
       .datum(angles.map((angle) => [angle, 0] as [number, number]))
-      .attr("fill", "rgba(0, 0, 255, 0.3)")
+      .attr("fill", "rgb(173,216,230)")
       .attr("d", areaHighADP);
 
     // Draw lines
