@@ -17,9 +17,45 @@ const page = ({ params }: any) => {
           <div className=" md:col-span-3">
             <InspectionCharts id={params?.id} />
           </div>
-          {/* Bottom Chart */}
-          <div className=" rounded-lg p-4 md:col-span-3 md:col-start-3  ">
-            <DifferenceChart id={params?.id} width={800} height={500} />
+        </div>
+        <div className=" flex flex-col">
+          <DifferenceChart id={params?.id} width={600} height={300} />
+          <div className="flex flex-col self-end mr-20 items-center  p-4">
+            <h2 className="text-lg font-semibold mb-2">AP Profile</h2>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-px bg-orange-500"></span>
+                <span>Anormal Inspection {params?.id} ASP</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-px bg-green-500"></span>
+                <span>Reference Visit {params?.id} ASP</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-px border-dotted border-2 border-orange-500"></span>
+                <span>Anormal Inspection {params?.id - 1} ASP</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-px border-dotted border-2 border-green-500"></span>
+                <span>Reference Visit {params?.id - 1} ASP</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-px bg-blue-500"></span>
+                <span>Anormal Inspection {params?.id} ADP</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-px bg-green-500"></span>
+                <span>Reference Visit {params?.id} ADP</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-px border-dotted border-2 border-blue-500"></span>
+                <span>Anormal Inspection {params?.id - 1} ADP</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-px border-dotted border-2 border-green-500"></span>
+                <span>Reference Visit {params?.id - 1} ADP</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
