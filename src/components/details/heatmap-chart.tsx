@@ -88,7 +88,7 @@ export default function Heatmap() {
           .attr("stroke", "black")
           .attr("stroke-width", 0)
           .append("title")
-          .text(`Value: ${value.toFixed(2)}`);
+          .text(`Value: ${value?.toFixed(2)}`);
       });
     });
 
