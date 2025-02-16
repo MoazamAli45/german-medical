@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import Loader from "../loader";
 
 interface DifferenceChartProps {
   id: number;
@@ -20,6 +21,7 @@ export function DifferenceChart({
 }: DifferenceChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [data, setData] = useState<number[][]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +33,8 @@ export function DifferenceChart({
         setData(result.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -117,18 +121,43 @@ export function DifferenceChart({
       .attr("x", width / 2)
       .attr("y", 20)
       .attr("text-anchor", "middle")
-      .attr("class", "text-base font-semibold")
+      .attr("class", "text-lg sm:text-[24px] font-normal hidden")
       .text(mainTitle);
+
+    // Make responsive
+    const resize = () => {
+      const newWidth = svgRef.current?.parentElement?.clientWidth || width;
+      const newHeight = (newWidth / width) * height;
+
+      svg.attr("width", newWidth).attr("height", newHeight);
+      svg
+        .select("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
   }, [data, width, height]);
 
+  if (isLoading) {
+    return (
+      <div className="flex  gap-1 w-1/2 h-[200px]  justify-center items-center sm:self-end  ">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
-    <div className="self-end mr-8">
+    <div className="flex flex-col gap-1 items-center sm:self-end sm:mr-8">
+      <span className="text-lg  sm:text-[24px] font-normal">
+        {id != 1 ? `Difference Inspection ${id - 1} and ${id}` : "Inspection 1"}
+      </span>
       <svg
         ref={svgRef}
         width={width}
         height={height}
-        className="w-full"
-        style={{ minWidth: "600px", height: "auto" }}
+        className="max-w-full w-full sm:w-[600px] height-auto"
         preserveAspectRatio="xMidYMid meet"
       />
     </div>
