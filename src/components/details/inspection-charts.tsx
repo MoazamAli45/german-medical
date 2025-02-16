@@ -64,7 +64,7 @@ export default function InspectionCharts({ id }: { id: string }) {
   }
 
   return (
-    <div className="flex flex-col sm:flex-row gap-6 p-4">
+    <div className="flex flex-col sm:flex-row gap-4 p-4">
       {/* First Inspection */}
       {data1 && (
         <div className="flex-1 bg-white rounded-lg  p-4">
@@ -137,7 +137,7 @@ export default function InspectionCharts({ id }: { id: string }) {
         </div>
       )}{" "}
       {!data2 && (
-        <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-center mb-6 h-[100px]  ">
+        <div className="p-2 bg-red-100  text-red-700 rounded-md text-center mb-6 h-[100px]  ">
           <p>No data found for this Inspection</p>
         </div>
       )}
