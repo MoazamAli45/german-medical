@@ -84,7 +84,7 @@ export default function Home() {
 
                           <BloodPressureChart number={inspection.number} />
                         </div>
-                        //jkjk
+
                         {
                           <Link
                             href={`/inspection/${inspection.number}`}
