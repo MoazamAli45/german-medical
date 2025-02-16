@@ -76,17 +76,17 @@ export default function InspectionCharts({ id }: { id: string }) {
             </p>
           </div>
 
-          <div className="flex flex-col gap-1 text-sm mb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#FF4D4D]"></div>
+          <div className="flex flex-col justify-center gap-1 text-center text-sm mb-4">
+            <div className="flex  justify-center align-middle gap-2">
+              <div className="w-2 h-2 mt-[5px] rounded-full bg-[#FF4D4D]"></div>
               <span className="text-[14px]">ASP {">"} Healthy ASP</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#ADD8E6]"></div>
+            <div className="flex justify-center gap-2">
+              <div className="w-2 h-2 mt-[5px] rounded-full bg-[#ADD8E6]"></div>
               <span className="text-[14px]">DBP {">"} Healthy ADP</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#90EE90]"></div>
+            <div className="flex justify-center gap-2">
+              <div className="w-2 h-2 mt-[5px] rounded-full bg-[#90EE90]"></div>
               <span className="text-[14px]">Healthy ASP/ADP {">"} ASP/SDP</span>
             </div>
           </div>
@@ -110,21 +110,25 @@ export default function InspectionCharts({ id }: { id: string }) {
               {data2.date} | {data1.date}
             </p>
             <p className="text-[19px] text-black">
-              {data1.age} | {data1.height} | {data2.height}
+              {data1.age} | {data2.age}, {data1.height} | {data2.height}
             </p>
           </div>
 
-          <div className="flex flex-col gap-1 justify-center items-center text-sm mb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#FF4D4D]"></div>
-              <span className="text-[14px]">
-                ASP Visit {id} {">"} Visit {+id - 1} ASP/ADP
+          <div className="flex flex-col gap-1 justify-center items-start text-sm mb-4">
+            <div className="flex justify-center gap-2">
+              <span className="text-[12px]">
+                <div className="w-2 h-2 rounded-full bg-[#FF4D4D] inline-block "></div>{" "}
+                ASP/{" "}
+                <div className="w-2 h-2 rounded-full bg-[#ADD8E6] inline-block "></div>{" "}
+                ADP Visit 5 {">"} Visit 4 ASP/ADP
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#ADD8E6]"></div>
-              <span className="text-[14px]">
-                ADP Visit {+id - 1} {">"} Visit {id} ASP/ADP
+            <div className="flex justify-center gap-2">
+              <span className="text-[12px]">
+                <div className="w-2 h-2 rounded-full bg-[#90EE90] inline-block "></div>{" "}
+                ASP/{" "}
+                <div className="w-2 h-2 rounded-full bg-[#90EE90] inline-block "></div>{" "}
+                ADP Visit 4 {">"} Visit 5 ASP/ADP
               </span>
             </div>
           </div>
