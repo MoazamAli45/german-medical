@@ -81,6 +81,26 @@ export default function Home() {
                           <div className="text-[16px] sm:text-[19px] text-black mb-4 text-center">
                             {inspection.age}, {inspection.height}
                           </div>
+                          <div className="flex flex-col justify-center gap-1 text-center text-sm mb-4">
+                            <div className="flex  justify-center align-middle gap-2">
+                              <div className="w-2 h-2 mt-[5px] rounded-full bg-[#FF4D4D]"></div>
+                              <span className="text-[14px]">
+                                ASP {">"} Healthy ASP
+                              </span>
+                            </div>
+                            <div className="flex justify-center gap-2">
+                              <div className="w-2 h-2 mt-[5px] rounded-full bg-[#ADD8E6]"></div>
+                              <span className="text-[14px]">
+                                DBP {">"} Healthy ADP
+                              </span>
+                            </div>
+                            <div className="flex justify-center gap-2">
+                              <div className="w-2 h-2 mt-[5px] rounded-full bg-[#90EE90]"></div>
+                              <span className="text-[14px]">
+                                Healthy ASP/ADP {">"} ASP/SDP
+                              </span>
+                            </div>
+                          </div>
                           <BloodPressureChart number={inspection.number} />
                         </div>
                         {
