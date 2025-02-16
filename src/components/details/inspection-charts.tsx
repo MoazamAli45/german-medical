@@ -119,15 +119,15 @@ export default function InspectionCharts({ id }: { id: string }) {
               <span className="text-[12px]">
                 <div className="w-2 h-2 rounded-full bg-[#FF4D4D] inline-block "></div>{" "}
                 ASP/{" "}
-                <div className="w-2 h-2 rounded-full bg-[#ADD8E6] inline-block "></div>{" "}
+                <div className="w-2 h-2 rounded-full bg-[#4343FF] inline-block "></div>{" "}
                 ADP Visit 5 {">"} Visit 4 ASP/ADP
               </span>
             </div>
             <div className="flex justify-center gap-2">
               <span className="text-[12px]">
-                <div className="w-2 h-2 rounded-full bg-[#90EE90] inline-block "></div>{" "}
+                <div className="w-2 h-2 rounded-full bg-[#FF8A8A] inline-block "></div>{" "}
                 ASP/{" "}
-                <div className="w-2 h-2 rounded-full bg-[#90EE90] inline-block "></div>{" "}
+                <div className="w-2 h-2 rounded-full bg-[#CCCCFF] inline-block "></div>{" "}
                 ADP Visit 4 {">"} Visit 5 ASP/ADP
               </span>
             </div>

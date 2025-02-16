@@ -90,7 +90,7 @@ export function RightSidebar({ inspection }: any) {
             {[
               {
                 time: "Mean ASP",
-                value: inspection.apMean.asp.day,
+                value: inspection.apMean.asp.overall,
                 icon: (
                   <Image
                     src={Sun || "/placeholder.svg"}
@@ -98,11 +98,11 @@ export function RightSidebar({ inspection }: any) {
                     className="h-[20px] w-[60px] sm:h-[25px] sm:w-[70px]"
                   />
                 ),
-                adp: inspection.apMean.adp.day,
+                adp: inspection.apMean.adp.overall,
               },
               {
                 time: "Mean ASP",
-                value: inspection.apMean.asp.overall,
+                value: inspection.apMean.asp.day,
                 icon: (
                   <Image
                     src={Star || "/placeholder.svg"}
@@ -110,7 +110,7 @@ export function RightSidebar({ inspection }: any) {
                     className="h-[20px] w-[20px] sm:h-[25px] sm:w-[25px]"
                   />
                 ),
-                adp: inspection.apMean.adp.overall,
+                adp: inspection.apMean.adp.day,
               },
               {
                 time: "Mean ASP",
@@ -180,8 +180,8 @@ export function RightSidebar({ inspection }: any) {
           <div className="space-y-6">
             {[
               {
-                asp: inspection.apLoad.asp.day,
-                adp: inspection.apLoad.adp.day,
+                asp: inspection.apLoad.asp.overall,
+                adp: inspection.apLoad.adp.overall,
                 icon: (
                   <Image
                     src={Sun || "/placeholder.svg"}
@@ -191,8 +191,8 @@ export function RightSidebar({ inspection }: any) {
                 ),
               },
               {
-                asp: inspection.apLoad.asp.overall,
-                adp: inspection.apLoad.adp.overall,
+                asp: inspection.apLoad.asp.day,
+                adp: inspection.apLoad.adp.day,
                 icon: (
                   <Image
                     src={Star || "/placeholder.svg"}
