@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import Loader from "../loader";
 
 interface DifferenceChartProps {
   id: number;
@@ -20,6 +21,7 @@ export function DifferenceChart({
 }: DifferenceChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [data, setData] = useState<number[][]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +33,8 @@ export function DifferenceChart({
         setData(result.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -135,6 +139,14 @@ export function DifferenceChart({
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, [data, width, height]);
+
+  if (isLoading) {
+    return (
+      <div className="flex  gap-1 w-1/2 h-[200px]  justify-center items-center sm:self-end  ">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-1 items-center sm:self-end sm:mr-8">
