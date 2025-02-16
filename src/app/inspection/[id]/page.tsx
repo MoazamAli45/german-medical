@@ -14,7 +14,7 @@ const page = ({ params }: any) => {
           <div className=" p-2 md:basis-[35%] ">
             <Heatmap id={params?.id} />
           </div>
-          <div className="ml-12 mr-2 sm:mr-0 sm:ml-0 mb-2 h-full md:basis-[65%] border-[3px] border-solid border-[#743C79]  mt-10 pb-4">
+          <div className="ml-3 mr-2 sm:mr-0 sm:ml-0 mb-2 h-full md:basis-[65%] border-[3px] border-solid border-[#743C79]  mt-10 pb-4">
             <div className="pb-5">
               <InspectionCharts id={params?.id} />
             </div>
