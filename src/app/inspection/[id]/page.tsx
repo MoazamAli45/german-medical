@@ -9,51 +9,54 @@ const page = ({ params }: any) => {
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
 
-      <div className="pl-12 sm:pl-16 lg:pr-[340px] transition-all duration-300 lg:col-span-9 space-y-6">
-        <div className="flex flex-col gap-1 md:grid  md:grid-cols-5">
-          <div className=" p-2 md:col-span-2 ">
+      <div className="pl-12 sm:pl-16 lg:pr-[360px] transition-all duration-300 lg:col-span-9 space-y-6">
+        <div className="flex flex-col gap-1   md:flex-row md:justify-center">
+          <div className=" p-2 md:basis-[35%] ">
             <Heatmap id={params?.id} />
           </div>
-          <div className=" md:col-span-3">
-            <InspectionCharts id={params?.id} />
-          </div>
-        </div>
-        <div className=" flex flex-col">
-          <DifferenceChart id={params?.id} width={600} height={300} />
-          <div className="flex flex-col self-end mr-20 items-center  p-4">
-            <h2 className="text-lg font-semibold mb-2">AP Profile</h2>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
-              <div className="flex items-center space-x-2">
-                <span className="w-6 h-px bg-orange-500"></span>
-                <span>Anormal Inspection {params?.id} ASP</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-6 h-px bg-green-500"></span>
-                <span>Reference Visit {params?.id} ASP</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-6 h-px border-dotted border-2 border-orange-500"></span>
-                <span>Anormal Inspection {params?.id - 1} ASP</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-6 h-px border-dotted border-2 border-green-500"></span>
-                <span>Reference Visit {params?.id - 1} ASP</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-6 h-px bg-blue-500"></span>
-                <span>Anormal Inspection {params?.id} ADP</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-6 h-px bg-green-500"></span>
-                <span>Reference Visit {params?.id} ADP</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-6 h-px border-dotted border-2 border-blue-500"></span>
-                <span>Anormal Inspection {params?.id - 1} ADP</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-6 h-px border-dotted border-2 border-green-500"></span>
-                <span>Reference Visit {params?.id - 1} ADP</span>
+          <div className="ml-3 mr-2 sm:mr-0 sm:ml-0 mb-2 h-full md:basis-[65%] border-[3px] border-solid border-[#743C79]  mt-10 pb-4">
+            <div className="pb-5">
+              <InspectionCharts id={params?.id} />
+            </div>
+
+            <div className=" flex flex-col">
+              <DifferenceChart id={params?.id} width={600} height={300} />
+              <div className="flex flex-col self-end mr-20 items-center  p-4">
+                <h2 className="text-lg font-semibold mb-2">AP Profile</h2>
+                <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-6 h-px bg-orange-500"></span>
+                    <span>Anormal Inspection {params?.id} ASP</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-6 h-px bg-green-500"></span>
+                    <span>Reference Visit {params?.id} ASP</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-6 h-px border-dotted border-2 border-orange-500"></span>
+                    <span>Anormal Inspection {params?.id - 1} ASP</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-6 h-px border-dotted border-2 border-green-500"></span>
+                    <span>Reference Visit {params?.id - 1} ASP</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-6 h-px bg-blue-500"></span>
+                    <span>Anormal Inspection {params?.id} ADP</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-6 h-px bg-green-500"></span>
+                    <span>Reference Visit {params?.id} ADP</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-6 h-px border-dotted border-2 border-blue-500"></span>
+                    <span>Anormal Inspection {params?.id - 1} ADP</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-6 h-px border-dotted border-2 border-green-500"></span>
+                    <span>Reference Visit {params?.id - 1} ADP</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

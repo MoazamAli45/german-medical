@@ -114,9 +114,9 @@ export default function InspectionCharts({ id }: { id: string }) {
             </p>
           </div>
 
-          <div className="flex flex-col gap-1 justify-center items-start text-sm mb-4">
+          <div className="flex flex-col gap-1 justify-center items-center text-sm mb-4">
             <div className="flex justify-center gap-2">
-              <span className="text-[12px]">
+              <span className="text-[14px]">
                 <div className="w-2 h-2 rounded-full bg-[#FF4D4D] inline-block "></div>{" "}
                 ASP/{" "}
                 <div className="w-2 h-2 rounded-full bg-[#4343FF] inline-block "></div>{" "}
@@ -124,7 +124,7 @@ export default function InspectionCharts({ id }: { id: string }) {
               </span>
             </div>
             <div className="flex justify-center gap-2">
-              <span className="text-[12px]">
+              <span className="text-[14px]">
                 <div className="w-2 h-2 rounded-full bg-[#FF8A8A] inline-block "></div>{" "}
                 ASP/{" "}
                 <div className="w-2 h-2 rounded-full bg-[#CCCCFF] inline-block "></div>{" "}

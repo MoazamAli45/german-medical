@@ -105,7 +105,7 @@ export default function Home() {
               )}
 
               {/* Legend */}
-              <div className="mt-6 flex flex-col items-start sm:flex-row sm:items-center  gap-6 justify-center">
+              <div className="mt-6 flex flex-col items-start sm:flex-row sm:items-center  gap-6 justify-center border-[1px] border-solid border-gray p-2  mx-auto">
                 {[
                   { color: "bg-red-500", label: "Abnormal ASP > Refenc ASP" },
                   { color: "bg-blue-500", label: "Abnormal ADP > Refenc ADP" },

@@ -142,7 +142,7 @@ export function DifferenceChart({
 
   if (isLoading) {
     return (
-      <div className="flex  gap-1 w-1/2 h-[200px]  justify-center items-center sm:self-end  ">
+      <div className="flex  gap-1  w-full  h-[200px]   justify-center items-center  sm:self-end  ">
         <Loader />
       </div>
     );
