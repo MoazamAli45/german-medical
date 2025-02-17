@@ -203,21 +203,21 @@ export function RightSidebar({ id }: { id: string }) {
               {[
                 {
                   time: "ASP",
-                  value: currentInspection.apMean.asp.day,
-                  prevValue: previousInspection?.apMean.asp.day,
+                  value: currentInspection.apMean.asp.overall,
+                  prevValue: previousInspection?.apMean.asp.overall,
                   icon: Sun,
                   iconAlt: "Sun",
-                  adp: currentInspection.apMean.adp.day,
-                  prevAdp: previousInspection?.apMean.adp.day,
+                  adp: currentInspection.apMean.adp.overall,
+                  prevAdp: previousInspection?.apMean.adp.overall,
                 },
                 {
                   time: "ASP",
-                  value: currentInspection.apMean.asp.overall,
-                  prevValue: previousInspection?.apMean.asp.overall,
+                  value: currentInspection.apMean.asp.day,
+                  prevValue: previousInspection?.apMean.asp.day,
                   icon: Moon,
                   iconAlt: "Star",
-                  adp: currentInspection.apMean.adp.overall,
-                  prevAdp: previousInspection?.apMean.adp.overall,
+                  adp: currentInspection.apMean.adp.day,
+                  prevAdp: previousInspection?.apMean.adp.day,
                 },
                 {
                   time: "ASP",
@@ -334,18 +334,18 @@ export function RightSidebar({ id }: { id: string }) {
             <div className="space-y-6">
               {[
                 {
-                  asp: currentInspection.apLoad.asp.day,
-                  prevAsp: previousInspection?.apLoad.asp.day,
-                  adp: currentInspection.apLoad.adp.day,
-                  prevAdp: previousInspection?.apLoad.adp.day,
-                  icon: Sun,
-                  iconAlt: "Sun",
-                },
-                {
                   asp: currentInspection.apLoad.asp.overall,
                   prevAsp: previousInspection?.apLoad.asp.overall,
                   adp: currentInspection.apLoad.adp.overall,
                   prevAdp: previousInspection?.apLoad.adp.overall,
+                  icon: Sun,
+                  iconAlt: "Sun",
+                },
+                {
+                  asp: currentInspection.apLoad.asp.day,
+                  prevAsp: previousInspection?.apLoad.asp.day,
+                  adp: currentInspection.apLoad.adp.day,
+                  prevAdp: previousInspection?.apLoad.adp.day,
                   icon: Moon,
                   iconAlt: "Star",
                 },
