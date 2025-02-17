@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { InfoIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Loader from "../loader";
 
 const xLabels = [
@@ -15,11 +16,12 @@ const xLabels = [
 ];
 const yLabels = ["5", "4", "3", "2", "1"];
 
-export default function Heatmap({ id = 2 }: { id: number }) {
+export default function Heatmap({ id }: { id: number }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [data, setData] = useState<number[][]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +29,7 @@ export default function Heatmap({ id = 2 }: { id: number }) {
         const response = await fetch(
           "https://germany-medical.vercel.app/heatmap"
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
+        if (!response.ok) throw new Error("Failed to fetch data");
         const jsonData = await response.json();
         setData(jsonData[id - 1]);
       } catch (err) {
@@ -49,15 +49,12 @@ export default function Heatmap({ id = 2 }: { id: number }) {
     const width = 400;
     const height = 300;
 
-    // Clear previous rendering
     d3.select(svgRef.current).selectAll("*").remove();
 
-    // Find min and max values for color scaling
     const flatData = data.flat();
     const minValue = Math.min(...flatData);
     const maxValue = Math.max(...flatData);
 
-    // Create color scale using YlGnBu colors
     const colorScale = d3
       .scaleSequential()
       .domain([minValue, maxValue])
@@ -67,29 +64,55 @@ export default function Heatmap({ id = 2 }: { id: number }) {
       .select(svgRef.current)
       .attr("viewBox", `0 0 ${width} ${height}`);
 
-    // Calculate cell dimensions
     const cellWidth = (width - margin.left - margin.right) / xLabels.length;
     const cellHeight = (height - margin.top - margin.bottom) / yLabels.length;
 
-    // Create heatmap cells
     const cells = svg
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    data.forEach((row, i) => {
-      row.forEach((value, j) => {
-        cells
-          .append("rect")
-          .attr("x", j * cellWidth)
-          .attr("y", i * cellHeight)
-          .attr("width", cellWidth)
-          .attr("height", cellHeight)
-          .attr("fill", colorScale(value))
-          .attr("stroke", "black")
-          .attr("stroke-width", 0)
-          .append("title");
-
+    // Create row groups for click handling
+    const rows = cells
+      .selectAll(".row")
+      .data(data)
+      .enter()
+      .append("g")
+      .attr("class", "row")
+      .attr("transform", (d, i) => `translate(0,${i * cellHeight})`)
+      .style("cursor", "pointer")
+      .on("click", (event, d) => {
+        const rowIndex = data.length - data.indexOf(d);
+        router.push(`/inspection/${rowIndex}`);
       });
+
+    // Add cells to each row
+    rows.each(function (rowData, rowIndex) {
+      const row = d3.select(this);
+
+      row
+        .selectAll("rect")
+        .data(rowData)
+        .enter()
+        .append("rect")
+        .attr("x", (d, j) => j * cellWidth)
+        .attr("width", cellWidth)
+        .attr("height", cellHeight)
+        .attr("fill", (d) => colorScale(d))
+        .append("title")
+        .text((d) => d);
+
+      // Add a border to the specific row
+      if (rowIndex === 5 - id) {
+        row
+          .append("rect")
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("width", cellWidth * xLabels.length)
+          .attr("height", cellHeight)
+          .attr("fill", "none")
+          .attr("stroke", "#773D76")
+          .attr("stroke-width", 3);
+      }
     });
 
     // Add X axis labels
@@ -139,7 +162,6 @@ export default function Heatmap({ id = 2 }: { id: number }) {
         `translate(${width - margin.right + 20},${margin.top})`
       );
 
-    // Create gradient
     const defs = legend.append("defs");
     const gradient = defs
       .append("linearGradient")
@@ -149,7 +171,6 @@ export default function Heatmap({ id = 2 }: { id: number }) {
       .attr("y1", "0%")
       .attr("y2", "100%");
 
-    // Add color stops
     const stops = d3.range(0, 1.1, 0.1);
     stops.forEach((stop) => {
       gradient
@@ -161,7 +182,6 @@ export default function Heatmap({ id = 2 }: { id: number }) {
         );
     });
 
-    // Add legend rectangle
     legend
       .append("rect")
       .attr("width", legendWidth)
@@ -170,7 +190,6 @@ export default function Heatmap({ id = 2 }: { id: number }) {
       .style("stroke", "black")
       .style("stroke-width", 0);
 
-    // Add legend labels
     legend
       .append("text")
       .attr("x", legendWidth + 5)
@@ -186,18 +205,7 @@ export default function Heatmap({ id = 2 }: { id: number }) {
       .attr("dominant-baseline", "baseline")
       .style("font-size", "12px")
       .text("Low");
-
-    // Add title and info icon
-    const titleGroup = svg
-      .append("g")
-      .attr("transform", `translate(${width / 2},${margin.top / 2})`);
-
-    titleGroup
-      .append("text")
-      .attr("text-anchor", "middle")
-      .attr("class", "text-lg font-semibold hidden ")
-      .text("Mean Deviation from Reference Values Over Time");
-  }, [data, isLoading]);
+  }, [data, isLoading, id, router]);
 
   if (error) {
     return (
@@ -220,28 +228,28 @@ export default function Heatmap({ id = 2 }: { id: number }) {
   return (
     <div className="p-2">
       <div className="relative">
-        <div className="flex items-center justify-center gap-1 ">
+        <div className="flex items-center justify-center gap-1">
           <h2 className="text-base sm:text-[19px] font-bold text-center md:max-w-[70%]">
             Mean Deviation from Reference Values Over Time
           </h2>
-          <InfoIcon className="h-6 w-6 text-black " />
+          <InfoIcon className="h-6 w-6 text-black" />
         </div>
         <svg
           ref={svgRef}
           className="w-full h-auto"
           style={{ maxHeight: "600px" }}
         />
-        <div className="flex gap-4 items-center flex-col ">
-          <div className="flex items-center justify-center gap-2 ">
-            <span className=" bg-[#D3D3D3] w-[23px] h-[20px] flex items-center justify-center  text-xs">
+        <div className="flex gap-4 items-center flex-col">
+          <div className="flex items-center justify-center gap-2">
+            <span className="bg-[#D3D3D3] w-[23px] h-[20px] flex items-center justify-center text-xs">
               X
             </span>
-            <span className="text-[14px] text-black w-[100px] ">
+            <span className="text-[14px] text-black w-[100px]">
               local scaling
             </span>
           </div>
-          <div className="flex items-center justify-center gap-2  ">
-            <span className="  bg-[#D3D3D3] w-[23px] h-[20px]"></span>
+          <div className="flex items-center justify-center gap-2">
+            <span className="bg-[#D3D3D3] w-[23px] h-[20px]"></span>
             <span className="text-[14px] text-black w-[100px]">
               global scaling
             </span>
